@@ -15,19 +15,6 @@ public class RubixCube {
 
 	private byte[][] cube = new byte[6][8];
 
-	
-	public void main(String[] args) {
-		loadFromFile("rubbix.txt");
-		rotateCube(R);
-		rotateCube(G);
-		rotateCube(Y);
-		rotateCube(B);
-		rotateCube(O);
-		rotateCube(W);
-
-		System.out.println(Arrays.deepToString(cube));
-	}
-	
 
 	public void loadFromFile(String filename) throws FileNotFoundException {
 		File f = new File(filename);
@@ -201,13 +188,13 @@ public class RubixCube {
 				cube[G][6] = start[W][1];
 				cube[G][7] = start[W][0];
 
-				cube[Y][0] = start[G][0];
-				cube[Y][1] = start[G][1];
-				cube[Y][2] = start[G][2];
+				cube[Y][5] = start[G][5];
+				cube[Y][6] = start[G][6];
+				cube[Y][7] = start[G][7];
 
-				cube[B][0] = start[Y][0];
-				cube[B][1] = start[Y][1];
-				cube[B][2] = start[Y][2];
+				cube[B][5] = start[Y][5];
+				cube[B][6] = start[Y][6];
+				cube[B][7] = start[Y][7];
 
 				cube[W][0] = start[B][7];
 				cube[W][1] = start[B][6];
