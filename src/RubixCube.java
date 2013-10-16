@@ -68,11 +68,32 @@ public class RubixCube {
 		System.out.println(Arrays.deepToString(cube));
 		//System.out.println(System.getProperty("user.dir"));
 		s.close();
+		
+		for (byte i=0; i<6; i++){
+			for (byte j=0; j<8; j++){
+				byte x = cube[i][j];
+				
+				switch(x){
+					case(82): cube[i][j] = 0; //R
+							  break;
+					case(71): cube[i][j] = 1; //G
+							  break;
+					case(89): cube[i][j] = 2; //Y
+							  break;
+					case(66): cube[i][j] = 3; //B
+							  break;
+					case(79): cube[i][j] = 4; //O
+							  break;
+					case(87): cube[i][j] = 5; //W
+							  break;
+				}
+			}
+		}
 	}
 
 	public void rotateCube(byte face) {
 
-		byte[][] start;
+		byte[][] start = new byte[6][8];
 		for (int i=0; i<6; i++) {
 			for (int j=0; j<8; j++) {
 				start[i][j] = cube[i][j];
