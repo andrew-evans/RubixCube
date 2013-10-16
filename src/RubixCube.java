@@ -15,6 +15,20 @@ public class RubixCube {
 
 	private byte[][] cube = new byte[6][8];
 
+	
+	public void main(String[] args) {
+		loadFromFile("rubbix.txt");
+		rotateCube(R);
+		rotateCube(G);
+		rotateCube(Y);
+		rotateCube(B);
+		rotateCube(O);
+		rotateCube(W);
+
+		System.out.println(Arrays.deepToString(cube));
+	}
+	
+
 	public void loadFromFile(String filename) throws FileNotFoundException {
 		File f = new File(filename);
 		Scanner s = new Scanner(f);
