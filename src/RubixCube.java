@@ -5,14 +5,14 @@ import java.util.Scanner;
 
 public class RubixCube {
 
-	private final byte R = 0 ;
+	private final byte R = 0;
 	private final byte G = 1;
 	private final byte Y = 2;
 	private final byte B = 3;
 	private final byte O = 4;
 	private final byte W = 5;
 
-	private byte[][] cube = new byte[6][8];
+	public byte[][] cube = new byte[6][8];
 
 	public RubixCube(String filename) throws FileNotFoundException {
 		this.loadFromFile(filename);
@@ -237,34 +237,38 @@ public class RubixCube {
 				}
 				if(j == 4){
 					switch(i){
-						case(0): rtnString += " R "; //R
+						case(R): rtnString += " R "; //R
 								  break;
-						case(1): rtnString += " G "; //G
+						case(G): rtnString += " G "; //G
 								  break;
-						case(2): rtnString += " Y "; //Y
+						case(Y): rtnString += " Y "; //Y
 								  break;
-						case(3): rtnString += " B "; //B
+						case(B): rtnString += " B "; //B
 								  break;
-						case(4): rtnString += " O "; //O
+						case(O): rtnString += " O "; //O
 								  break;
-						case(5): rtnString += " W "; //W
+						case(W): rtnString += " W "; //W
 								  break;
+						case(-1): rtnString += " . "; //W
+						  break;
 					}
 				}
 				
 				switch(x){
-					case(0): rtnString += " R "; //R
+					case(R): rtnString += " R "; //R
 							  break;
-					case(1): rtnString += " G "; //G
+					case(G): rtnString += " G "; //G
 							  break;
-					case(2): rtnString += " Y "; //Y
+					case(Y): rtnString += " Y "; //Y
 							  break;
-					case(3): rtnString += " B "; //B
+					case(B): rtnString += " B "; //B
 							  break;
-					case(4): rtnString += " O "; //O
+					case(O): rtnString += " O "; //O
 							  break;
-					case(5): rtnString += " W "; //W
+					case(W): rtnString += " W "; //W
 							  break;
+					case(-1): rtnString += " . "; //W
+					  break;
 				}
 			}
 			rtnString += "\n\n";

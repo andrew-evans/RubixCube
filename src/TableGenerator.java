@@ -1,13 +1,12 @@
 
 import java.io.*;
 import java.util.*;
-import RubixCube;
 
 public class TableGenerator {
 
 	private RubixCube goal;
 
-	public void makeCubieTable() {
+	public void makeCubieTable() throws FileNotFoundException {
 		goal.loadFromFile("goal-cubies.txt");
 	}
 
