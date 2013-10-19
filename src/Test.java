@@ -4,7 +4,12 @@ import java.io.FileNotFoundException;
 class Test {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		RubixCube test = new RubixCube("rubbix.txt");
+		
+		TableGenerator test = new TableGenerator();
+		test.main();
+		
+		/*
+		 * RubixCube test = new RubixCube("rubbix.txt");
 		RubixCube test2 = new RubixCube("rubbix.txt");
 		
 		byte R = 0;
@@ -24,6 +29,7 @@ class Test {
 		//System.out.println(test.toString());
 		
 		//aStar(test2,R);
+		*/
 	}
 	
 	public String IDA(RubixCube cube, byte costSoFar) throws FileNotFoundException{

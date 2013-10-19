@@ -1,6 +1,8 @@
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class TableGenerator {
 
@@ -39,27 +41,38 @@ public class TableGenerator {
 
 	private RubixCube goal;
 
-	public void main(String[] args) {
-		makeCubieTable();
+	public void main() throws FileNotFoundException {
+		this.makeCubieTable();
 
-		Path file = "/heuristic-tables/cubie-table.txt";
-		byte[] buffer = this.table;
-		Files.write(file, buffer);
+		String file = "/heuristic-tables/cubie-table.txt";
+		//BufferedOutputStream bos = null;
+		try{
+			//Create an object of FileOutputStream
+			FileOutputStream fos = new FileOutputStream(new File(file));
+			
+			//create an object of BufferedOutputStream
+			//bos = new BufferedOutputStream(fos);
+			byte[] table = this.table;
+			fos.write(table);
+			fos.close();
+		}catch(IOException e){
+			System.err.println(e);
+		}
 	}
 
 	public void makeCubieTable() throws FileNotFoundException {
-		goal.loadFromFile("goal-cubies.txt");
+		goal = new RubixCube("goal-cubies.txt");
 		table = new byte[561610664]; //280805332
 
-		branch(goal, 0);
+		branch(goal, (byte)0);
 	}
 
-	public void branch(RubixCube state, count) {
+	public void branch(RubixCube state, byte count) {
 		int index = getIndex(state);
 		if (table[index] > count || table[index] == 0) {
 			table[index] = count;
 			for (byte i = R; i <= W; i++) {
-				branch(state.rotateCube(i, count);
+				branch(state.rotateCube(i), count);
 			}
 		}
 	}
