@@ -11,6 +11,8 @@ public class TableGenerator {
 	private final byte O = 4;
 	private final byte W = 5;
 
+	private byte[] table;
+
 	//Corner Cubie Locations
 	private final byte[][][] CCL = {
 		{{0,0}, {1,0}, {5,5}},
@@ -37,11 +39,29 @@ public class TableGenerator {
 
 	private RubixCube goal;
 
+	public void main(String[] args) {
+		makeCubieTable();
+
+		Path file = "/heuristic-tables/cubie-table.txt";
+		byte[] buffer = this.table;
+		Files.write(file, buffer);
+	}
+
 	public void makeCubieTable() throws FileNotFoundException {
 		goal.loadFromFile("goal-cubies.txt");
-		byte[] table = new byte[88179840];
+		table = new byte[561610664]; //280805332
 
-		
+		branch(goal, 0);
+	}
+
+	public void branch(RubixCube state, count) {
+		int index = getIndex(state);
+		if (table[index] > count || table[index] == 0) {
+			table[index] = count;
+			for (byte i = R; i <= W; i++) {
+				branch(state.rotateCube(i, count);
+			}
+		}
 	}
 
 	public int getIndex(RubixCube state) {
