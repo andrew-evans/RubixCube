@@ -97,7 +97,7 @@ public class RubixCube {
 		}
 	}
 
-	public void rotateCube(byte face) {
+	public RubixCube rotateCube(byte face) {
 
 		byte[][] start = new byte[6][8];
 		for (int i=0; i<6; i++) {
@@ -224,6 +224,8 @@ public class RubixCube {
 				cube[O][7] = start[G][5];
 				break;
 		}
+
+		return this;
 	}
 	
 	public String toString(){
