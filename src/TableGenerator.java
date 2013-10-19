@@ -1,7 +1,6 @@
 
 import java.io.*;
 import java.util.*;
-import RubixCube;
 
 public class TableGenerator {
 
@@ -9,6 +8,9 @@ public class TableGenerator {
 
 	public void makeCubieTable() {
 		goal.loadFromFile("goal-cubies.txt");
+		byte[88179840] table;
+
+		
 	}
 
 }
