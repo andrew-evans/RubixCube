@@ -6,7 +6,7 @@ public class TableGenerator {
 
 	private RubixCube goal;
 
-	public void makeCubieTable() {
+	public void makeCubieTable() throws FileNotFoundException {
 		goal.loadFromFile("goal-cubies.txt");
 		byte[88179840] table;
 

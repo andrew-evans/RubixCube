@@ -22,6 +22,13 @@ class Test {
 		test.rotateCube(W);
 		
 		System.out.println(test.toString());
+		
+		
+		if(!solutionFound){
+			
+		}
+		
+		
 	}
 
 }
