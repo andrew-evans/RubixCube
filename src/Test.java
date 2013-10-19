@@ -26,20 +26,23 @@ class Test {
 		//aStar(test2,R);
 	}
 	
-	public void IDA(RubixCube cube, byte costSoFar){
+	public String IDA(RubixCube cube, byte costSoFar) throws FileNotFoundException{
 		boolean solutionFound = false;
 		double bound = 1;
 		byte[] hist = new byte[6];
-		//Something solution = null;
-		//Something goal = null;
+		RubixCube solution = null;
+		RubixCube goal = new RubixCube("goal-cubies.txt");
 		while (!solutionFound){
-			//solution = aStar(cube, costSoFar, rotationsSoFar, bound, goal, hist);
-			//if(solution == goal){return solutionFound};
+			solution = aStar(cube, costSoFar, rotationsSoFar, bound, goal, hist);
+			if(solution.equals(goal)){
+				solutionFound = true;
+				return "";
+			};
 			bound += 1;
 		}
 	}
 	
-	public static void aStar(RubixCube cube, byte costSoFar, double rotationsSoFar, double bound, byte goal, byte[] hist){
+	public RubixCube aStar(RubixCube cube, byte costSoFar, double rotationsSoFar, double bound, byte goal, byte[] hist){
 		if(rotationsSoFar != bound){
 			byte[] byteArray = {R,G,Y,B,O,W};
 			byte[] history = hist;
@@ -58,10 +61,6 @@ class Test {
 				cubeArray[i].rotateCube(byteArray[i]);
 				fnArray[i] = costSoFar + heuristic(cubeArray[i]);
 			}
-			
-			
-			
-			/*
 			
 			byte smallestFn = 127;
 			byte indexOfBest = -1;
@@ -83,13 +82,13 @@ class Test {
 				//increase costSoFar
 				rotationsSoFar += 1;
 				//I don't think I need this but idk
-				Something solution = aStar(cubeArray[indexOfBest], costSoFar, rotationsSoFar, bound, goal, history);
-				if(solution == goal){
-					return solution
+				RubixCube solution = aStar(cubeArray[indexOfBest], costSoFar, rotationsSoFar, bound, goal, history);
+				if(solution.equals(goal)){
+					return solution;
 				}
 			}
 		}
-		*/
+		
 		/*node1.rotateCube(R);
 		node2.rotateCube(R);
 		System.out.println(node1.toString());
