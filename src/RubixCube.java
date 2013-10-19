@@ -15,6 +15,10 @@ public class RubixCube {
 
 	private byte[][] cube = new byte[6][8];
 
+	public RubixCube(String filename) {
+		this.loadFromFile(filename);
+	}
+
 
 	public void loadFromFile(String filename) throws FileNotFoundException {
 		File f = new File(filename);
@@ -75,17 +79,17 @@ public class RubixCube {
 				byte x = cube[i][j];
 				
 				switch(x){
-					case(82): cube[i][j] = 0; //R
+					case(82): cube[i][j] = R;
 							  break;
-					case(71): cube[i][j] = 1; //G
+					case(71): cube[i][j] = G;
 							  break;
-					case(89): cube[i][j] = 2; //Y
+					case(89): cube[i][j] = Y;
 							  break;
-					case(66): cube[i][j] = 3; //B
+					case(66): cube[i][j] = B;
 							  break;
-					case(79): cube[i][j] = 4; //O
+					case(79): cube[i][j] = O;
 							  break;
-					case(87): cube[i][j] = 5; //W
+					case(87): cube[i][j] = W;
 							  break;
 				}
 			}
