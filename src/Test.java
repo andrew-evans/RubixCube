@@ -1,5 +1,4 @@
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 
 class Test {
@@ -30,23 +29,20 @@ class Test {
 	public void IDA(RubixCube cube, byte costSoFar){
 		boolean solutionFound = false;
 		double bound = 1;
+		byte[] hist = new byte[6];
 		//Something solution = null;
+		//Something goal = null;
 		while (!solutionFound){
-			//solution = aStar(cube, costSoFar, rotationsSoFar, bound, goal);
+			//solution = aStar(cube, costSoFar, rotationsSoFar, bound, goal, hist);
 			//if(solution == goal){return solutionFound};
 			bound += 1;
 		}
 	}
 	
-	public static void aStar(RubixCube cube, byte costSoFar, double rotationsSoFar, double bound, byte goal){
+	public static void aStar(RubixCube cube, byte costSoFar, double rotationsSoFar, double bound, byte goal, byte[] hist){
 		if(rotationsSoFar != bound){
-			byte R = 0;
-			byte G = 1;
-			byte Y = 2;
-			byte B = 3;
-			byte O = 4;
-			byte W = 5;
 			byte[] byteArray = {R,G,Y,B,O,W};
+			byte[] history = hist;
 			//byte fn = costSoFar + heuristic(cube);
 			RubixCube node1 = cube;
 			RubixCube node2 = cube;
@@ -55,22 +51,45 @@ class Test {
 			RubixCube node5 = cube;
 			RubixCube node6 = cube;
 			RubixCube[] cubeArray = {node1,node2,node3,node4,node5,node6};
+			byte[] fnArray = {-1,-1,-1,-1,-1,-1};
+			
 			
 			for(int i=0; i<cubeArray.length; i++){
 				cubeArray[i].rotateCube(byteArray[i]);
-				byte fn = costSoFar + heuristic(cubeArray[i]);
-				
-				if (fn == goal){
-					//return cubeArray[i];
+				fnArray[i] = costSoFar + heuristic(cubeArray[i]);
+			}
+			
+			
+			
+			/*
+			
+			byte smallestFn = 127;
+			byte indexOfBest = -1;
+			for(byte i=0; i<fnArray.length; i++){
+				if (fnArray[i]<smallestFn){
+					smallestFn = fnArray[i];
+					indexOfBest = i;
 				}
-				else{
-					//increase costSoFar
-					rotationsSoFar += 1;
-					aStar(cubeArray[i], costSoFar, rotationsSoFar, bound, goal);
+			}
+			
+			byte[] actionPerformed = {indexOfBest};
+			//System.arraycopy(history, 0, actionPerformed, 0, actionPerformed.length);
+			history[indexOfBest] += 1;
+			
+			if (smallestFn == goal){
+				//return cubeArray[i];
+			}
+			else{
+				//increase costSoFar
+				rotationsSoFar += 1;
+				//I don't think I need this but idk
+				Something solution = aStar(cubeArray[indexOfBest], costSoFar, rotationsSoFar, bound, goal, history);
+				if(solution == goal){
+					return solution
 				}
 			}
 		}
-		
+		*/
 		/*node1.rotateCube(R);
 		node2.rotateCube(R);
 		System.out.println(node1.toString());
