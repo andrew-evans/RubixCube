@@ -29,9 +29,11 @@ class Test {
 	public void IDA(RubixCube cube, byte costSoFar){
 		boolean solutionFound = false;
 		double bound = 1;
+		byte[] hist = new byte[6];
 		//Something solution = null;
+		//Something goal = null;
 		while (!solutionFound){
-			//solution = aStar(cube, costSoFar, rotationsSoFar, bound, goal);
+			//solution = aStar(cube, costSoFar, rotationsSoFar, bound, goal, hist);
 			//if(solution == goal){return solutionFound};
 			bound += 1;
 		}
@@ -57,6 +59,10 @@ class Test {
 				fnArray[i] = costSoFar + heuristic(cubeArray[i]);
 			}
 			
+			
+			
+			/*
+			
 			byte smallestFn = 127;
 			byte indexOfBest = -1;
 			for(byte i=0; i<fnArray.length; i++){
@@ -67,7 +73,8 @@ class Test {
 			}
 			
 			byte[] actionPerformed = {indexOfBest};
-			System.arraycopy(history, 0, actionPerformed, 0, actionPerformed.length);
+			//System.arraycopy(history, 0, actionPerformed, 0, actionPerformed.length);
+			history[indexOfBest] += 1;
 			
 			if (smallestFn == goal){
 				//return cubeArray[i];
@@ -75,10 +82,14 @@ class Test {
 			else{
 				//increase costSoFar
 				rotationsSoFar += 1;
-				aStar(cubeArray[indexOfBest], costSoFar, rotationsSoFar, bound, goal, history);
+				//I don't think I need this but idk
+				Something solution = aStar(cubeArray[indexOfBest], costSoFar, rotationsSoFar, bound, goal, history);
+				if(solution == goal){
+					return solution
+				}
 			}
 		}
-		
+		*/
 		/*node1.rotateCube(R);
 		node2.rotateCube(R);
 		System.out.println(node1.toString());
