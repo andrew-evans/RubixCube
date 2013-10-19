@@ -22,13 +22,13 @@ class Test {
 		test.rotateCube(W);
 		
 		System.out.println(test.toString());
-		
-		
-		if(!solutionFound){
-			
-		}
-		
-		
 	}
-
+	
+	public void IDA(RubixCube cube){
+		boolean solutionFound = false;
+		//Something solution = null;
+		while (!solutionFound){
+			//solution = 
+		}
+	}
 }
