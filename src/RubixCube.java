@@ -1,12 +1,11 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class RubixCube {
 
-	private final byte R = 0;
+	private final byte R = 0 ;
 	private final byte G = 1;
 	private final byte Y = 2;
 	private final byte B = 3;
@@ -15,7 +14,7 @@ public class RubixCube {
 
 	private byte[][] cube = new byte[6][8];
 
-	public RubixCube(String filename) {
+	public RubixCube(String filename) throws FileNotFoundException {
 		this.loadFromFile(filename);
 	}
 
@@ -64,13 +63,13 @@ public class RubixCube {
 						bounds += 1;
 					}
 				}
-				System.out.println(row1);
+				/*System.out.println(row1);
 				System.out.println(row2);
-				System.out.println(row3);
+				System.out.println(row3);*/
 				//System.out.println(Arrays.toString(face));
 			}
 		}
-		System.out.println(Arrays.deepToString(cube));
+		//System.out.println(Arrays.deepToString(cube));
 		//System.out.println(System.getProperty("user.dir"));
 		s.close();
 		
@@ -79,17 +78,17 @@ public class RubixCube {
 				byte x = cube[i][j];
 				
 				switch(x){
-					case(82): cube[i][j] = R;
+					case(82): cube[i][j] = 0; //R
 							  break;
-					case(71): cube[i][j] = G;
+					case(71): cube[i][j] = 1; //G
 							  break;
-					case(89): cube[i][j] = Y;
+					case(89): cube[i][j] = 2; //Y
 							  break;
-					case(66): cube[i][j] = B;
+					case(66): cube[i][j] = 3; //B
 							  break;
-					case(79): cube[i][j] = O;
+					case(79): cube[i][j] = 4; //O
 							  break;
-					case(87): cube[i][j] = W;
+					case(87): cube[i][j] = 5; //W
 							  break;
 				}
 			}
@@ -223,5 +222,51 @@ public class RubixCube {
 				cube[O][7] = start[G][5];
 				break;
 		}
+	}
+	
+	public String toString(){
+		String rtnString = "";
+		for (byte i=0; i<6; i++){
+			for (byte j=0; j<8; j++){
+				byte x = cube[i][j];
+				
+				if (j == 3 || j == 5){
+					rtnString += "\n";
+				}
+				if(j == 4){
+					switch(i){
+						case(0): rtnString += " R "; //R
+								  break;
+						case(1): rtnString += " G "; //G
+								  break;
+						case(2): rtnString += " Y "; //Y
+								  break;
+						case(3): rtnString += " B "; //B
+								  break;
+						case(4): rtnString += " O "; //O
+								  break;
+						case(5): rtnString += " W "; //W
+								  break;
+					}
+				}
+				
+				switch(x){
+					case(0): rtnString += " R "; //R
+							  break;
+					case(1): rtnString += " G "; //G
+							  break;
+					case(2): rtnString += " Y "; //Y
+							  break;
+					case(3): rtnString += " B "; //B
+							  break;
+					case(4): rtnString += " O "; //O
+							  break;
+					case(5): rtnString += " W "; //W
+							  break;
+				}
+			}
+			rtnString += "\n\n";
+		}
+		return rtnString;
 	}
 }
