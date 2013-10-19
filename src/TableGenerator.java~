@@ -1,14 +1,44 @@
 
 import java.io.*;
 import java.util.*;
-import RubixCube;
 
 public class TableGenerator {
 
+	private final byte R = 0;
+	private final byte G = 1;
+	private final byte Y = 2;
+	private final byte B = 3;
+	private final byte O = 4;
+	private final byte W = 5;
+
+	private final cornerCubieLocations = {
+		{{0,0}, {1,0}, {5,5}},
+		{{0,2}, {3,2}, {5,7}},
+		{{0,5}, {1,2}, {2,0}},
+		{{0,7}, {2,2}, {3,0}},
+		{{4,0}, {1,7}, {2,5}},
+		{{4,2}, {2,7}, {3,5}},
+		{{4,5}, {1,5}, {5,0}},
+		{{4,7}, {3,7}, {5,2}}
+	};
+	private final cornerCubieValues = {
+		{R,G,W},
+		{R,B,W},
+		{R,G,Y}, {G,Y,R}, {Y,R,G},
+		{R,Y,B),
+		{O,G,Y},
+		{O,Y,B},
+		{O,G,W},
+		{O,B,W}
+	};
+
 	private RubixCube goal;
 
-	public void makeCubieTable() {
+	public void makeCubieTable() throws FileNotFoundException {
 		goal.loadFromFile("goal-cubies.txt");
+		byte[88179840] table;
+
+		
 	}
 
 }
