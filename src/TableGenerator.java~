@@ -1,0 +1,10 @@
+
+import java.io.*;
+import java.util.*;
+import RubixCube;
+
+public class TableGenerator {
+
+	private RubixCube goal = new RubixCube("goal.txt");
+
+}
