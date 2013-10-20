@@ -52,13 +52,15 @@ public class TableGenerator {
 		//BufferedOutputStream bos = null;
 		try{
 			//Create an object of FileOutputStream
-			FileOutputStream fos = new FileOutputStream(new File(file));
+			PrintWriter writer = new PrintWriter(file, "UTF-8");
+			//FileOutputStream fos = new FileOutputStream(new File(file));
 			
 			//create an object of BufferedOutputStream
 			//bos = new BufferedOutputStream(fos);
-			byte[] table = this.table;
-			fos.write(table);
-			fos.close();
+			for (int i=0; i<table.length; i++) {
+				writer.print("" + table[i] + " ");
+			}
+			writer.close();
 		}catch(IOException e){
 			System.err.println(e);
 		}
