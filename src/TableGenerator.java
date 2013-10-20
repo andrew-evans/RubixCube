@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class TableGenerator {
 
@@ -88,8 +89,7 @@ public class TableGenerator {
 
 	public int getIndex(RubixCube state) {
 		byte[] cubie = new byte[3];
-		byte[] indexA = new byte[7];
-		boolean contains;
+		int[] indexA = new int[7];
 		String indexB = "0";
 		int currentCubie, currentOrientation;
 		
@@ -124,7 +124,7 @@ public class TableGenerator {
 				indexA[1] * 720 +
 				indexA[0] * 5040;
 		int b = Integer.parseInt(indexB, 3);
-		
+		System.out.println(Arrays.toString(indexA));
 		//System.out.println("****a: " + a + "b: " + b + "****");
 		return a * 2187 + b;
 	}
