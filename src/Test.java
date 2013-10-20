@@ -98,7 +98,7 @@ class Test {
 			history[indexOfBest] += 1;
 			
 			if (smallestFn == goal){
-				//return cubeArray[i];
+				return cubeArray[indexOfBest];
 			}
 			else{
 				//increase costSoFar
@@ -116,6 +116,13 @@ class Test {
 		System.out.println(node1.toString());
 		System.out.println(node2.toString());
 		*/
+	}
+	
+	public int heuristic(RubixCube cube){
+		
+		
+		return 0;
+		
 	}
 }
 
