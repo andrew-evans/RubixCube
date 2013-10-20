@@ -1,10 +1,11 @@
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TableGenerator {
 
@@ -48,19 +49,26 @@ public class TableGenerator {
 	public void main() throws FileNotFoundException {
 		this.makeCubieTable();
 
-		String file = "/heuristic-tables/cubie-table.txt";
+		String file = "heuristic-tables/cubie-table.txt";
 		//BufferedOutputStream bos = null;
 		try{
 			//Create an object of FileOutputStream
-			PrintWriter writer = new PrintWriter(file, "UTF-8");
+			//PrintWriter writer = new PrintWriter(file, "UTF-8");
 			//FileOutputStream fos = new FileOutputStream(new File(file));
-			
+			FileWriter writer = new FileWriter(file);
 			//create an object of BufferedOutputStream
-			//bos = new BufferedOutputStream(fos);
+			//BufferedOutputStream bos = new BufferedOutputStream(fos);
+			byte[] table = this.table;
 			for (int i=0; i<table.length; i++) {
-				writer.print("" + table[i] + " ");
+				writer.append(",");
+				writer.append(""+table[i]);
+				writer.append("\n");
 			}
+			writer.flush();
 			writer.close();
+			//writer.close();
+			//bos.write(table);
+			//bos.close();
 		}catch(IOException e){
 			System.err.println(e);
 		}
@@ -80,8 +88,8 @@ public class TableGenerator {
 		}
 		
 		int index = getIndex(state);
-		System.out.println(index);
-		if ((table[index] > count || table[index] == (byte)0) && count<= 11) {
+		//System.out.println(index);
+		if (table[index] > count || table[index] == (byte)0) {
 			table[index] = count++;
 			for (byte i = R; i <= W; i++) {
 				branch(state.rotateCube(i), count);
@@ -93,12 +101,13 @@ public class TableGenerator {
 	public int getIndex(RubixCube state) {
 		byte[] cubie = new byte[3];
 		int[] indexA = new int[7];
+		int counter = 0;
 		ArrayList<Integer> remaining = new ArrayList<Integer>(8);
 		for (int cocksandwich=0; cocksandwich<8; cocksandwich++) {
 			remaining.add(cocksandwich);
 		}
 		String indexB = "0";
-		int currentCubie, otherCubie, counter, currentOrientation;
+		int currentCubie, otherCubie, currentOrientation;
 		
 		for (byte i=0; i<CCL.length-1; i++) {
 
@@ -113,7 +122,8 @@ public class TableGenerator {
 
 					indexA[i] = currentCubie;
 					otherCubie = currentCubie;
-					while (otherCubie <= 0) {
+					counter = 0;
+					while (otherCubie >= 0) {
 						if (!remaining.contains(otherCubie--))
 							counter++;
 					}
@@ -134,7 +144,7 @@ public class TableGenerator {
 				indexA[1] * 720 +
 				indexA[0] * 5040;
 		int b = Integer.parseInt(indexB, 3);
-		System.out.println(Arrays.toString(indexA));
+		//System.out.println(Arrays.toString(indexA));
 		//System.out.println("****a: " + a + "b: " + b + "****");
 		return a * 2187 + b;
 	}
