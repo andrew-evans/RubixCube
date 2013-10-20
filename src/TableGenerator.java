@@ -1,11 +1,9 @@
 
-import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TableGenerator {
 
@@ -33,16 +31,26 @@ public class TableGenerator {
 	};
 
 	//Corner Cubie Values
-	private final byte[][] CCV = {
+	/*private final byte[][] CCV = {
 		{R,G,W}, {G,W,R}, {W,R,G},
-		{R,B,W}, {B,W,R}, {W,R,B},
+		{R,W,B}, {W,B,R}, {B,R,W},
 		{R,G,Y}, {G,Y,R}, {Y,R,G},
 		{R,Y,B}, {Y,B,R}, {B,R,Y},
 		{O,G,Y}, {G,Y,O}, {Y,O,G},
 		{O,Y,B}, {Y,B,O}, {B,O,Y},
 		{O,G,W}, {G,W,O}, {W,O,G},
 		{O,B,W}, {B,W,O}, {W,O,B}
-	};
+	};*/
+	private final byte[][] CCV = {
+			{R,G,W},
+			{R,W,B},
+			{R,G,Y},
+			{R,Y,B},
+			{O,G,Y},
+			{O,Y,B},
+			{O,G,W},
+			{O,B,W},
+		};
 
 	private RubixCube goal;
 
@@ -54,7 +62,7 @@ public class TableGenerator {
 		try{
 			//Create an object of FileOutputStream
 			//PrintWriter writer = new PrintWriter(file, "UTF-8");
-			//FileOutputStream fos = new FileOutputStream(file);//new File(file));
+			FileOutputStream fos = new FileOutputStream(file);//new File(file));
 			//FileWriter writer = new FileWriter(file);
 			//create an object of BufferedOutputStream
 			//BufferedOutputStream bos = new BufferedOutputStream(fos);
@@ -68,10 +76,10 @@ public class TableGenerator {
 			//writer.flush();
 			//writer.close();
 			//writer.close();
-			//fos.write(table);
-			//fos.close();
-		}finally{
-			//System.err.println(e);
+			fos.write(table);
+			fos.close();
+		}catch(IOException e){
+			System.err.println(e);
 		}
 	}
 
@@ -93,6 +101,7 @@ public class TableGenerator {
 		if ((table[index] > count || table[index] == (byte)0) && count<= 33) {
 			table[index] = count++;
 			for (byte i = R; i <= W; i++) {
+				branch(state.rotateCube(i), count);
 				branch(state.rotateCube(i).rotateCube(i).rotateCube(i), count);
 			}
 		}
@@ -111,15 +120,22 @@ public class TableGenerator {
 		int currentCubie, otherCubie, currentOrientation;
 		
 		for (byte i=0; i<CCL.length-1; i++) {
+			byte z=0;
 
 			for (byte j=0; j<3; j++) {
 				cubie[j] = state.cube[CCL[i][j][0]] [CCL[i][j][1]];
 			}
 
-			for (byte z=0; z<CCV.length; z++) {
-				if (cubie[0] == CCV[z][0] && cubie[1] == CCV[z][1] && cubie[2] == CCV[z][2]) {
-					currentCubie = z / 3;
-					currentOrientation = z % 3;
+			for (z=0; z<CCV.length; z++) {
+				if ((cubie[0] == CCV[z][0] || cubie[0] == CCV[z][1] || cubie[0] == CCV[z][2]) &&
+						(cubie[1] == CCV[z][0] || cubie[1] == CCV[z][1] || cubie[1] == CCV[z][2]) &&
+						(cubie[2] == CCV[z][0] || cubie[2] == CCV[z][1] || cubie[2] == CCV[z][2])) {
+					currentCubie = z;// / 3;
+					counter = 0;
+					while (CCV[z][counter] != cubie[0]) {
+						counter += 1;
+					}
+					currentOrientation = counter;//z % 3;
 
 					indexA[i] = currentCubie;
 					otherCubie = currentCubie;
@@ -136,6 +152,8 @@ public class TableGenerator {
 					break;
 				}
 			}
+			if (z==CCV.length)
+				System.out.println("didn't find a cubie value.  " + Arrays.toString(cubie));
 		}
 		int a = indexA[6] +
 				indexA[5] * 2 +
