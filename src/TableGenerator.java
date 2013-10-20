@@ -102,7 +102,7 @@ public class TableGenerator {
 			table[index] = count++;
 			for (byte i = R; i <= W; i++) {
 				branch(state.rotateCube(i), count);
-				branch(state.rotateCube(i).rotateCube(i).rotateCube(i), count);
+				//branch(state.rotateCube(i).rotateCube(i).rotateCube(i), count);
 			}
 		}
 		shit--;
