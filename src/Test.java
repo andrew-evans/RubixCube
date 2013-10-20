@@ -9,19 +9,19 @@ class Test {
 
 	public static void main(String[] args) throws IOException {
 		
-		//TableGenerator test = new TableGenerator();
-		//test.main();
+		TableGenerator test = new TableGenerator();
+		test.main();
 		
 		//File f = new File("heuristic-tables/cubie-table.txt");
 		//Scanner s = new Scanner(f);
 		
 		
 		//System.out.println(f.exists());
-		FileInputStream fis = new FileInputStream("heuristic-tables/cubie-table.txt");
+		/*FileInputStream fis = new FileInputStream("heuristic-tables/cubie-table.txt");
 		int c;
 		while((c = fis.read()) != 0){
 			System.out.println(c);
-		}
+		}*/
 		
 		//fis.close();
 		/*

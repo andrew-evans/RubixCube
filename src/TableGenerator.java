@@ -54,23 +54,24 @@ public class TableGenerator {
 		try{
 			//Create an object of FileOutputStream
 			//PrintWriter writer = new PrintWriter(file, "UTF-8");
-			FileOutputStream fos = new FileOutputStream(file);//new File(file));
+			//FileOutputStream fos = new FileOutputStream(file);//new File(file));
 			//FileWriter writer = new FileWriter(file);
 			//create an object of BufferedOutputStream
 			//BufferedOutputStream bos = new BufferedOutputStream(fos);
 			byte[] table = this.table;
 			/*for (int i=0; i<table.length; i++) {
-				fos.write(table[i]);
+				System.out.println(table[i]);
+				//fos.write(table[i]);
 				//fos.write(",");
 				//fos.write("\n");
 			}*/
 			//writer.flush();
 			//writer.close();
 			//writer.close();
-			fos.write(table);
-			fos.close();
-		}catch(IOException e){
-			System.err.println(e);
+			//fos.write(table);
+			//fos.close();
+		}finally{
+			//System.err.println(e);
 		}
 	}
 
@@ -89,10 +90,10 @@ public class TableGenerator {
 		
 		int index = getIndex(state);
 		//System.out.println(index);
-		if (table[index] > count || table[index] == (byte)0) {
+		if ((table[index] > count || table[index] == (byte)0) && count<= 33) {
 			table[index] = count++;
 			for (byte i = R; i <= W; i++) {
-				branch(state.rotateCube(i), count);
+				branch(state.rotateCube(i).rotateCube(i).rotateCube(i), count);
 			}
 		}
 		shit--;
