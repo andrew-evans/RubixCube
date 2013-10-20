@@ -90,13 +90,15 @@ public class TableGenerator {
 	public int getIndex(RubixCube state) {
 		byte[] cubie = new byte[3];
 		int[] indexA = new int[7];
+		int[] nums = {0,1,2,3,4,5,6,7};
+		ArrayList remaining = new ArrayList(Arrays.asList(nums));
 		String indexB = "0";
-		int currentCubie, currentOrientation;
+		int currentCubie, otherCubie, currentOrientation;
 		
 		for (byte i=0; i<CCL.length-1; i++) {
 
 			for (byte j=0; j<3; j++) {
-				cubie[j] = state.cube[CCL[i][j][0]] [CCL[i][j][1]] ;
+				cubie[j] = state.cube[CCL[i][j][0]] [CCL[i][j][1]];
 			}
 
 			for (byte z=0; z<CCV.length; z++) {
@@ -104,12 +106,13 @@ public class TableGenerator {
 					currentCubie = z / 3;
 					currentOrientation = z % 3;
 
-					if (currentCubie <= 7 - i) {
-						indexA[i] = currentCubie;
+					indexA[i] = currentCubie;
+					otherCubie = currentCubie;
+					while (!remaining.contains(otherCubie--)) {
+						indexA[i] -= 1;
 					}
-					else {
-						indexA[i] = currentCubie - i;
-					}
+					remaining.remove(new Integer(currentCubie));
+					
 					indexB += currentOrientation;
 
 					break;
