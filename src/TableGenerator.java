@@ -14,6 +14,7 @@ public class TableGenerator {
 	private final byte W = 5;
 
 	private byte[] table;
+	private int fuck;
 
 	//Corner Cubie Locations
 	private final byte[][][] CCL = {
@@ -68,6 +69,9 @@ public class TableGenerator {
 	}
 
 	public void branch(RubixCube state, byte count) {
+		if (++fuck % 10000 == 0) {
+			System.out.println("" + fuck + "K recursions.");
+		}
 		int index = getIndex(state);
 		if (table[index] > count || table[index] == 0) {
 			table[index] = count;
