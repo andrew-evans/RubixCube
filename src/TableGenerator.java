@@ -69,8 +69,8 @@ public class TableGenerator {
 	}
 
 	public void branch(RubixCube state, byte count) {
-		if (++fuck % 10000 == 0) {
-			System.out.println("" + fuck + "K recursions.");
+		if (++fuck % 1000000 == 0) {
+			System.out.println("" + fuck + " recursions.");
 		}
 		int index = getIndex(state);
 		if (table[index] > count || table[index] == 0) {
