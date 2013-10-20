@@ -64,7 +64,7 @@ public class TableGenerator {
 
 	public void makeCubieTable() throws FileNotFoundException {
 		goal = new RubixCube("goal-cubies.txt");
-		table = new byte[561610664]; //280805332
+		table = new byte[88179840]; //280805332   561610664
 
 		branch(goal, (byte)0);
 	}
@@ -88,7 +88,8 @@ public class TableGenerator {
 
 	public int getIndex(RubixCube state) {
 		byte[] cubie = new byte[3];
-		String indexA = "0";
+		byte[] indexA = new byte[7];
+		boolean contains;
 		String indexB = "0";
 		int currentCubie, currentOrientation;
 		
@@ -103,17 +104,28 @@ public class TableGenerator {
 					currentCubie = z / 3;
 					currentOrientation = z % 3;
 
-					indexA += currentCubie;
+					if (currentCubie <= 7 - i) {
+						indexA[i] = currentCubie;
+					}
+					else {
+						indexA[i] = currentCubie - i;
+					}
 					indexB += currentOrientation;
 
 					break;
 				}
 			}
 		}
-		int a = Integer.parseInt(indexA, 8);
+		int a = indexA[6] +
+				indexA[5] * 2 +
+				indexA[4] * 6 +
+				indexA[3] * 24 +
+				indexA[2] * 120 +
+				indexA[1] * 720 +
+				indexA[0] * 5040;
 		int b = Integer.parseInt(indexB, 3);
 		
-		System.out.println("****a: " + a + "b: " + b + "****");
+		//System.out.println("****a: " + a + "b: " + b + "****");
 		return a * 2187 + b;
 	}
 
