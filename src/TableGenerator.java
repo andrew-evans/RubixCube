@@ -86,7 +86,7 @@ public class TableGenerator {
 		for (int i=0; i<CCL.length-1; i++) {
 
 			for (int j=0; j<3; j++) {
-				cubie[j] = state.cube[CCL[i][j][0]] [CCL[i][j][1]];
+				cubie[j] = state.cube[CCL[i][j][0]] [CCL[i][j][1]] ;
 			}
 
 			for (int z=0; z<CCV.length; z++) {
