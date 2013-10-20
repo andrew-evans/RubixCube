@@ -54,21 +54,21 @@ public class TableGenerator {
 		try{
 			//Create an object of FileOutputStream
 			//PrintWriter writer = new PrintWriter(file, "UTF-8");
-			//FileOutputStream fos = new FileOutputStream(new File(file));
-			FileWriter writer = new FileWriter(file);
+			FileOutputStream fos = new FileOutputStream(file);//new File(file));
+			//FileWriter writer = new FileWriter(file);
 			//create an object of BufferedOutputStream
 			//BufferedOutputStream bos = new BufferedOutputStream(fos);
 			byte[] table = this.table;
-			for (int i=0; i<table.length; i++) {
-				writer.append(",");
-				writer.append(""+table[i]);
-				writer.append("\n");
-			}
-			writer.flush();
-			writer.close();
+			/*for (int i=0; i<table.length; i++) {
+				fos.write(table[i]);
+				//fos.write(",");
+				//fos.write("\n");
+			}*/
+			//writer.flush();
 			//writer.close();
-			//bos.write(table);
-			//bos.close();
+			//writer.close();
+			fos.write(table);
+			fos.close();
 		}catch(IOException e){
 			System.err.println(e);
 		}
