@@ -79,8 +79,8 @@ public class TableGenerator {
 
 	public int getIndex(RubixCube state) {
 		byte[] cubie = new byte[3];
-		String indexA = "";
-		String indexB = "";
+		String indexA = "0";
+		String indexB = "0";
 		int currentCubie, currentOrientation;
 		
 		for (int i=0; i<CCL.length-1; i++) {
