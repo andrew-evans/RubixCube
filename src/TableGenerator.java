@@ -96,7 +96,7 @@ public class TableGenerator {
 			remaining.add(cocksandwich);
 		}
 		String indexB = "0";
-		int currentCubie, otherCubie, currentOrientation;
+		int currentCubie, otherCubie, counter, currentOrientation;
 		
 		for (byte i=0; i<CCL.length-1; i++) {
 
@@ -111,9 +111,11 @@ public class TableGenerator {
 
 					indexA[i] = currentCubie;
 					otherCubie = currentCubie;
-					while (!remaining.contains(otherCubie--)) {
-						indexA[i] -= 1;
+					while (otherCubie <= 0) {
+						if (!remaining.contains(otherCubie--))
+							counter++;
 					}
+					indexA[i] -= counter;
 					remaining.remove(new Integer(currentCubie));
 					
 					indexB += currentOrientation;
