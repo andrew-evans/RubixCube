@@ -26,6 +26,8 @@ class Search {
 		
 		this.goalCube = new RubixCube("goal.txt");
 		this.inputCube = new RubixCube(inputCube);
+		frontier = new PriorityQueue<RubixCube>();
+		
 		FileInputStream fis = new FileInputStream("heuristic-tables/cubie-table.txt");
 		int index = 0;
 		while(index < table.length){
@@ -84,7 +86,6 @@ class Search {
 			if(Arrays.deepEquals(solution.cube, this.goalCube.cube)){
 				solutionFound = true;
 			};
-			System.out.println(solution.toString());
 			//bound += 1;
 		}
 		return this.history;
@@ -95,7 +96,7 @@ class Search {
 		//System.out.println("A*..."+rotationsSoFar);
 		//}
 		
-		if(rotationsSoFar < 5){
+		if(rotationsSoFar < bound){
 			byte[] faceArray = {R,G,Y,B,O,W};
 			//byte[] history = hi st;
 			//byte fn = costSoFar + heuristic(cube);
@@ -105,11 +106,7 @@ class Search {
 			RubixCube node4 = cube;
 			RubixCube node5 = cube;
 			RubixCube node6 = cube;
-
 			RubixCube[] cubeArray = {node1,node2,node3,node4,node5,node6};
-			for(int i=0; i<cubeArray.length; i++){
-				frontier.add(cubeArray[i]);
-			}
 			
 			int[] fnArray = {-1,-1,-1,-1,-1,-1};
 			
@@ -119,34 +116,39 @@ class Search {
 				cubeArray[i].rotateCube(faceArray[i]);
 				fnArray[i] = costSoFar + heuristic(cubeArray[i]);
 			}
+			
+			for(int i=0; i<cubeArray.length; i++){
+				frontier.add(cubeArray[i]);
+			}
+			
 			//System.out.println(Arrays.toString(fnArray));
-			int smallestFn = 9999;
-			byte indexOfBest = -1;
+			//int smallestFn = 9999;
+			//byte indexOfBest = -1;
 			//need to resolve ties
-			for(byte i=0; i<fnArray.length; i++){
+			/*for(byte i=0; i<fnArray.length; i++){
 				if (fnArray[i]<=smallestFn){
 					smallestFn = fnArray[i];
 					indexOfBest = i;
 					frontier.a;
 				}
-			}
+			}*/
 			//System.out.println(indexOfBest);
-			this.history += indexOfBest;
+			this.history += this.frontier.element().actionPerformed;
 			//history[indexOfBest] += 1;
-			
-			if (Arrays.deepEquals(cubeArray[indexOfBest].cube, this.goalCube.cube) ){
-				return cubeArray[indexOfBest];
+			rotationsSoFar += 1;
+			System.out.println(this.frontier.element().toString());
+			if (Arrays.deepEquals(this.frontier.element().cube, this.goalCube.cube) ){
+				return this.frontier.remove();
 			}
 			else{
-				costSoFar = fnArray[indexOfBest]; 
-				rotationsSoFar += 1;
-				RubixCube solution = aStar(cubeArray[indexOfBest], costSoFar, rotationsSoFar, bound);//, this.hist);
+				costSoFar += this.frontier.element().heuristic; 
+				RubixCube solution = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound);//, this.hist);
 				if(Arrays.deepEquals(solution.cube, this.goalCube.cube)){
 					return solution;
 				}
 			}
 		}
-		return cube;
+		return this.frontier.remove();
 		
 		/*node1.rotateCube(R);
 		node2.rotateCube(R);
@@ -156,7 +158,7 @@ class Search {
 	}
 	
 	public int heuristic(RubixCube cube){
-		return this.table[cube.getIndex()];
+		return this.table[cube.getIndexCorner()];
 	}
 }
 
