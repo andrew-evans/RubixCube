@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class RubixCube implements Comparable<Integer> {
+public class RubixCube implements Comparable<RubixCube> {
 
 	private final byte R = 0;
 	private final byte G = 1;
@@ -13,7 +13,8 @@ public class RubixCube implements Comparable<Integer> {
 	private final byte B = 3;
 	private final byte O = 4;
 	private final byte W = 5;
-	private int heuristic = 0;
+	public int heuristic = 0;
+	public byte actionPerformed = 0;
 
 	//corner cubie locations
 	private final byte[][][] CCL = {
@@ -161,7 +162,7 @@ public class RubixCube implements Comparable<Integer> {
 	}
 
 	public RubixCube rotateCube(byte face) {
-
+		this.actionPerformed = face;
 		byte[][] start = new byte[6][8];
 		for (int i=0; i<6; i++) {
 			for (int j=0; j<8; j++) {
@@ -364,13 +365,13 @@ public class RubixCube implements Comparable<Integer> {
 		String indexB = "0";
 		int currentCubieLocation, otherCubieLocation, currentOrientation;
 		
-		for (byte i=ECV.length-1; i>=0; i--) {
+		for (byte i=(byte) (ECV.length-1); i>=0; i--) {
 			byte z=0;
 
 			cubie = ECV[i];
 
 			for (z=0; z<ECL.length; z++) {
-				if ((cube[ECL[z][0][0]][ECL[z][0][1]] == cubie[0] && cube[ECL[z][1][0]][ECL[z][1][1]] == cubie[1]) {
+				if ((cube[ECL[z][0][0]][ECL[z][0][1]] == cubie[0] && cube[ECL[z][1][0]][ECL[z][1][1]] == cubie[1])) {
 					currentCubieLocation = z;// / 3;
 					counter = 0;
 					while (cube[ECL[z][counter][0]][ECL[z][counter][1]] != cubie[0]) {
@@ -460,8 +461,15 @@ public class RubixCube implements Comparable<Integer> {
 
 
 	@Override
-	public int compareTo(Integer o) {
+	public int compareTo(RubixCube rb) {
+		if(this.heuristic < rb.heuristic){
+			return -1;
+		}else if(this.heuristic == rb.heuristic){
+			return 0;
+		}else{
+			return 1;
+		}
 		
-		return 0;
+		
 	}
 }
