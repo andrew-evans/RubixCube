@@ -370,7 +370,8 @@ public class RubixCube implements Comparable<Integer> {
 			cubie = ECV[i];
 
 			for (z=0; z<ECL.length; z++) {
-				if ((cube[ECL[z][0][0]][ECL[z][0][1]] == cubie[0] && cube[ECL[z][1][0]][ECL[z][1][1]] == cubie[1]) {
+				if ((cube[ECL[z][0][0]][ECL[z][0][1]] == cubie[0] && cube[ECL[z][1][0]][ECL[z][1][1]] == cubie[1]) ||
+						(cube[ECL[z][0][0]][ECL[z][0][1]] == cubie[1] && cube[ECL[z][1][0]][ECL[z][1][1]] == cubie[0])) {
 					currentCubieLocation = z;// / 3;
 					counter = 0;
 					while (cube[ECL[z][counter][0]][ECL[z][counter][1]] != cubie[0]) {
