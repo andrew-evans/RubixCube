@@ -77,6 +77,7 @@ class Search {
 		
 		while (!solutionFound){
 			System.out.println("Beginning of While: "+rotationsSoFar);
+			this.history = "";
 			solution = aStar(this.inputCube, costSoFar, rotationsSoFar, bound);//, this.hist);
 			if(Arrays.deepEquals(solution.cube, this.goalCube.cube)){
 				solutionFound = true;
@@ -105,9 +106,11 @@ class Search {
 			RubixCube[] cubeArray = {node1,node2,node3,node4,node5,node6};
 			int[] fnArray = {-1,-1,-1,-1,-1,-1};
 			
-			
+			//need to resolve ties
+			//
 			for(int i=0; i<cubeArray.length; i++){
-				cubeArray[i].rotateCube(faceArray[i]).rotateCube(faceArray[i]).rotateCube(faceArray[i]);
+				//cubeArray[i].rotateCube(faceArray[i]).rotateCube(faceArray[i]).rotateCube(faceArray[i]);
+				cubeArray[i].rotateCube(faceArray[i]);
 				fnArray[i] = costSoFar + heuristic(cubeArray[i]);
 			}
 			//System.out.println(Arrays.toString(fnArray));
