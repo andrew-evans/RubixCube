@@ -55,9 +55,9 @@ public class TableGenerator {
 	private RubixCube goal;
 
 	public void main() throws FileNotFoundException {
-		this.makeCubieTable();
+		this.makeEdge1CubieTable();
 
-		String file = "heuristic-tables/cubie-table.txt";
+		String file = "heuristic-tables/edge1cubie-table.txt";
 		//BufferedOutputStream bos = null;
 		try{
 			//Create an object of FileOutputStream
@@ -83,26 +83,38 @@ public class TableGenerator {
 		}
 	}
 
-	public void makeCubieTable() throws FileNotFoundException {
+	public void makeCornerCubieTable() throws FileNotFoundException {
 		goal = new RubixCube("goal-cubies.txt");
 		table = new byte[88179840]; //280805332   561610664
 
-		branch(goal, (byte)0);
+		branch(goal, (byte) 0, 0);
 	}
 
-	public void branch(RubixCube state, byte count) {
+	public void makeEdge1CubieTable() throws FileNotFoundException {
+		goal = new RubixCube("goal-edges1.txt");
+		table = new byte[42577920];
+
+		branch(goal, (byte) 0, 1);
+	}
+
+	//type = 0 for corner, 1 for edge 1, 2 for edge 2
+	public void branch(RubixCube state, byte count, int type) {
 		shit++;
 		if (++fuck % 1000000 == 0) {
 			System.out.println("" + fuck + " recursions: " + shit + " active.");
 		}
-		
-		int index = state.getIndex();
+
+		int index = 0;
+		switch (type) {
+			case (0): index = state.getIndexCorner(); break;
+			case (1): index = state.getIndexEdge1(); break;
+		}
 		//System.out.println(index);
 		if ((table[index] > count || table[index] == (byte)0) && count<= 33) {
 			table[index] = count++;
 			for (byte i = R; i <= W; i++) {
 				//branch(state.rotateCube(i), count);
-				branch(state.rotateCube(i).rotateCube(i).rotateCube(i), count);
+				branch(state.rotateCube(i).rotateCube(i).rotateCube(i), count, type);
 			}
 		}
 		shit--;

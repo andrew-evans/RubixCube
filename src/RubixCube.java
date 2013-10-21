@@ -14,7 +14,8 @@ public class RubixCube implements Comparable<Integer> {
 	private final byte O = 4;
 	private final byte W = 5;
 	private int heuristic = 0;
-	
+
+	//corner cubie locations
 	private final byte[][][] CCL = {
 			{{0,0}, {1,0}, {5,5}},
 			{{0,2}, {3,2}, {5,7}},
@@ -25,7 +26,8 @@ public class RubixCube implements Comparable<Integer> {
 			{{4,5}, {1,5}, {5,0}},
 			{{4,7}, {3,7}, {5,2}}
 		};
-	
+
+	//corner cubie values
 	private final byte[][] CCV = {
 			{R,G,W},
 			{R,W,B},
@@ -35,6 +37,42 @@ public class RubixCube implements Comparable<Integer> {
 			{O,Y,B},
 			{O,G,W},
 			{O,B,W},
+		};
+
+	//edge cubie locations
+	private final byte[][][] ECL = {
+			{{R,1}, {W,6}},
+			{{R,3}, {G,1}},
+			{{R,4}, {B,1}},
+			{{R,6}, {Y,1}},
+			{{Y,6}, {O,1}},
+			{{O,6}, {W,1}},
+			{{G,3}, {W,3}},
+			{{G,4}, {Y,3}},
+			{{G,6}, {O,3}},
+			{{B,3}, {Y,4}},
+			{{B,4}, {W,4}},
+			{{B,6}, {O,4}}
+		};
+
+	//edge-one cubie values
+	private final byte[][] ECV = {
+			{R,G},
+			{R,Y},
+			{R,B},
+			{R,W},
+			{Y,O},
+			{O,W}
+		};
+
+	//second-edge cubie values
+	private final byte[][] SCV = {
+			{G,Y},
+			{G,O},
+			{G,W},
+			{Y,B},
+			{B,O},
+			{B,W}
 		};
 
 	public byte[][] cube = new byte[6][8];
@@ -252,8 +290,9 @@ public class RubixCube implements Comparable<Integer> {
 
 		return this;
 	}
-	
-	public int getIndex() {
+
+	//returns index of the corner cubie state
+	public int getIndexCorner() {
 		byte[] cubie = new byte[3];
 		int[] indexA = new int[7];
 		int counter = 0;
@@ -311,6 +350,62 @@ public class RubixCube implements Comparable<Integer> {
 		//System.out.println(Arrays.toString(indexA));
 		//System.out.println("****a: " + a + "b: " + b + "****");
 		return a * 2187 + b;
+	}
+
+	//returns index of the edge-one cubie state
+	public int getIndexEdge1() {
+		byte[] cubie = new byte[2];
+		int[] indexA = new int[6];
+		int counter = 0;
+		ArrayList<Integer> remaining = new ArrayList<Integer>(12);
+		for (int cocksandwich=0; cocksandwich<12; cocksandwich++) {
+			remaining.add(cocksandwich);
+		}
+		String indexB = "0";
+		int currentCubieLocation, otherCubieLocation, currentOrientation;
+		
+		for (byte i=ECV.length-1; i>=0; i--) {
+			byte z=0;
+
+			cubie = ECV[i];
+
+			for (z=0; z<ECL.length; z++) {
+				if ((cube[ECL[z][0][0]][ECL[z][0][1]] == cubie[0] && cube[ECL[z][1][0]][ECL[z][1][1]] == cubie[1]) {
+					currentCubieLocation = z;// / 3;
+					counter = 0;
+					while (cube[ECL[z][counter][0]][ECL[z][counter][1]] != cubie[0]) {
+						counter += 1;
+					}
+					currentOrientation = counter;//z % 3;
+
+					indexA[i] = currentCubieLocation;
+					otherCubieLocation = currentCubieLocation;
+					counter = 0;
+					while (otherCubieLocation >= 0) {
+						if (!remaining.contains(otherCubieLocation--))
+							counter++;
+					}
+					indexA[i] -= counter;
+					remaining.remove(new Integer(currentCubieLocation));
+					
+					indexB += currentOrientation;
+
+					break;
+				}
+			}
+			if (z==ECL.length)
+				System.out.println("didn't find a cubie value.  " + Arrays.toString(cubie));
+		}
+		int a = indexA[5] +
+				indexA[4] * 7 +
+				indexA[3] * 56 +
+				indexA[2] * 504 +
+				indexA[1] * 5040 +
+				indexA[0] * 55440;
+		int b = Integer.parseInt(indexB, 2);
+		//System.out.println(Arrays.toString(indexA));
+		//System.out.println("****a: " + a + "b: " + b + "****");
+		return a * 64 + b;
 	}
 	
 	public String toString(){
