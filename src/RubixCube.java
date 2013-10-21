@@ -1,6 +1,8 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class RubixCube {
@@ -11,6 +13,28 @@ public class RubixCube {
 	private final byte B = 3;
 	private final byte O = 4;
 	private final byte W = 5;
+	
+	private final byte[][][] CCL = {
+			{{0,0}, {1,0}, {5,5}},
+			{{0,2}, {3,2}, {5,7}},
+			{{0,5}, {1,2}, {2,0}},
+			{{0,7}, {2,2}, {3,0}},
+			{{4,0}, {1,7}, {2,5}},
+			{{4,2}, {2,7}, {3,5}},
+			{{4,5}, {1,5}, {5,0}},
+			{{4,7}, {3,7}, {5,2}}
+		};
+	
+	private final byte[][] CCV = {
+			{R,G,W},
+			{R,W,B},
+			{R,G,Y},
+			{R,Y,B},
+			{O,G,Y},
+			{O,Y,B},
+			{O,G,W},
+			{O,B,W},
+		};
 
 	public byte[][] cube = new byte[6][8];
 
@@ -226,6 +250,66 @@ public class RubixCube {
 		}
 
 		return this;
+	}
+	
+	public int getIndex() {
+		byte[] cubie = new byte[3];
+		int[] indexA = new int[7];
+		int counter = 0;
+		ArrayList<Integer> remaining = new ArrayList<Integer>(8);
+		for (int cocksandwich=0; cocksandwich<8; cocksandwich++) {
+			remaining.add(cocksandwich);
+		}
+		String indexB = "0";
+		int currentCubie, otherCubie, currentOrientation;
+		
+		for (byte i=0; i<CCL.length-1; i++) {
+			byte z=0;
+
+			for (byte j=0; j<3; j++) {
+				cubie[j] = this.cube[CCL[i][j][0]] [CCL[i][j][1]];
+			}
+
+			for (z=0; z<CCV.length; z++) {
+				if ((cubie[0] == CCV[z][0] || cubie[0] == CCV[z][1] || cubie[0] == CCV[z][2]) &&
+						(cubie[1] == CCV[z][0] || cubie[1] == CCV[z][1] || cubie[1] == CCV[z][2]) &&
+						(cubie[2] == CCV[z][0] || cubie[2] == CCV[z][1] || cubie[2] == CCV[z][2])) {
+					currentCubie = z;// / 3;
+					counter = 0;
+					while (CCV[z][counter] != cubie[0]) {
+						counter += 1;
+					}
+					currentOrientation = counter;//z % 3;
+
+					indexA[i] = currentCubie;
+					otherCubie = currentCubie;
+					counter = 0;
+					while (otherCubie >= 0) {
+						if (!remaining.contains(otherCubie--))
+							counter++;
+					}
+					indexA[i] -= counter;
+					remaining.remove(new Integer(currentCubie));
+					
+					indexB += currentOrientation;
+
+					break;
+				}
+			}
+			if (z==CCV.length)
+				System.out.println("didn't find a cubie value.  " + Arrays.toString(cubie));
+		}
+		int a = indexA[6] +
+				indexA[5] * 2 +
+				indexA[4] * 6 +
+				indexA[3] * 24 +
+				indexA[2] * 120 +
+				indexA[1] * 720 +
+				indexA[0] * 5040;
+		int b = Integer.parseInt(indexB, 3);
+		//System.out.println(Arrays.toString(indexA));
+		//System.out.println("****a: " + a + "b: " + b + "****");
+		return a * 2187 + b;
 	}
 	
 	public String toString(){

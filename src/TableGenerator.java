@@ -96,7 +96,7 @@ public class TableGenerator {
 			System.out.println("" + fuck + " recursions: " + shit + " active.");
 		}
 		
-		int index = getIndex(state);
+		int index = state.getIndex();
 		//System.out.println(index);
 		if ((table[index] > count || table[index] == (byte)0) && count<= 33) {
 			table[index] = count++;
@@ -108,7 +108,7 @@ public class TableGenerator {
 		shit--;
 	}
 
-	public int getIndex(RubixCube state) {
+	/*public int getIndex(RubixCube state) {
 		byte[] cubie = new byte[3];
 		int[] indexA = new int[7];
 		int counter = 0;
@@ -166,6 +166,6 @@ public class TableGenerator {
 		//System.out.println(Arrays.toString(indexA));
 		//System.out.println("****a: " + a + "b: " + b + "****");
 		return a * 2187 + b;
-	}
+	}*/
 
 }
