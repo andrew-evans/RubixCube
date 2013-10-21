@@ -2,6 +2,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.PriorityQueue;
 
 
 class Search {
@@ -14,6 +15,7 @@ class Search {
 	private final byte O = 4;
 	private final byte W = 5;
 	private String history = "";
+	PriorityQueue<RubixCube> frontier;
 	RubixCube goalCube;
 	RubixCube inputCube;
 	public void init(String inputCube) throws IOException {
@@ -103,11 +105,15 @@ class Search {
 			RubixCube node4 = cube;
 			RubixCube node5 = cube;
 			RubixCube node6 = cube;
+
 			RubixCube[] cubeArray = {node1,node2,node3,node4,node5,node6};
+			for(int i=0; i<cubeArray.length; i++){
+				frontier.add(cubeArray[i]);
+			}
+			
 			int[] fnArray = {-1,-1,-1,-1,-1,-1};
 			
-			//need to resolve ties
-			//
+			
 			for(int i=0; i<cubeArray.length; i++){
 				//cubeArray[i].rotateCube(faceArray[i]).rotateCube(faceArray[i]).rotateCube(faceArray[i]);
 				cubeArray[i].rotateCube(faceArray[i]);
@@ -116,10 +122,12 @@ class Search {
 			//System.out.println(Arrays.toString(fnArray));
 			int smallestFn = 9999;
 			byte indexOfBest = -1;
+			//need to resolve ties
 			for(byte i=0; i<fnArray.length; i++){
-				if (fnArray[i]<smallestFn){
+				if (fnArray[i]<=smallestFn){
 					smallestFn = fnArray[i];
 					indexOfBest = i;
+					frontier.a;
 				}
 			}
 			//System.out.println(indexOfBest);

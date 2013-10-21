@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class RubixCube {
+public class RubixCube implements Comparable<Integer> {
 
 	private final byte R = 0;
 	private final byte G = 1;
@@ -13,6 +13,7 @@ public class RubixCube {
 	private final byte B = 3;
 	private final byte O = 4;
 	private final byte W = 5;
+	private int heuristic = 0;
 	
 	private final byte[][][] CCL = {
 			{{0,0}, {1,0}, {5,5}},
@@ -360,5 +361,12 @@ public class RubixCube {
 			rtnString += "\n\n";
 		}
 		return rtnString;
+	}
+
+
+	@Override
+	public int compareTo(Integer o) {
+		
+		return 0;
 	}
 }
