@@ -13,6 +13,7 @@ class Search {
 	private final byte B = 3;
 	private final byte O = 4;
 	private final byte W = 5;
+	private String history = "";
 	RubixCube goalCube;
 	RubixCube inputCube;
 	public void init(String inputCube) throws IOException {
@@ -70,30 +71,30 @@ class Search {
 	public String IDA() throws FileNotFoundException{
 		boolean solutionFound = false;
 		int bound = 1;
-		byte[] hist = new byte[6];
 		int rotationsSoFar = 0;
 		RubixCube solution = null;
 		int costSoFar = 0;
 		
 		while (!solutionFound){
 			System.out.println("Beginning of While: "+rotationsSoFar);
-			solution = aStar(this.inputCube, costSoFar, rotationsSoFar, bound, hist);
+			solution = aStar(this.inputCube, costSoFar, rotationsSoFar, bound);//, this.hist);
 			if(Arrays.deepEquals(solution.cube, this.goalCube.cube)){
 				solutionFound = true;
 			};
-			bound += 1;
+			System.out.println(solution.toString());
+			//bound += 1;
 		}
-		return Arrays.toString(hist);
+		return this.history;
 	}
 	
-	public RubixCube aStar(RubixCube cube, int costSoFar, int rotationsSoFar, int bound, byte[] hist){
+	public RubixCube aStar(RubixCube cube, int costSoFar, int rotationsSoFar, int bound){//, byte[] hist){
 		//if(rotationsSoFar % 10 == 0){
-		System.out.println("A*..."+rotationsSoFar);
+		//System.out.println("A*..."+rotationsSoFar);
 		//}
 		
-		if(rotationsSoFar < 3){
-			byte[] byteArray = {R,G,Y,B,O,W};
-			byte[] history = hist;
+		if(rotationsSoFar < 5){
+			byte[] faceArray = {R,G,Y,B,O,W};
+			//byte[] history = hist;
 			//byte fn = costSoFar + heuristic(cube);
 			RubixCube node1 = cube;
 			RubixCube node2 = cube;
@@ -106,10 +107,10 @@ class Search {
 			
 			
 			for(int i=0; i<cubeArray.length; i++){
-				cubeArray[i].rotateCube(byteArray[i]);
+				cubeArray[i].rotateCube(faceArray[i]).rotateCube(faceArray[i]).rotateCube(faceArray[i]);
 				fnArray[i] = costSoFar + heuristic(cubeArray[i]);
 			}
-			
+			//System.out.println(Arrays.toString(fnArray));
 			int smallestFn = 9999;
 			byte indexOfBest = -1;
 			for(byte i=0; i<fnArray.length; i++){
@@ -118,10 +119,9 @@ class Search {
 					indexOfBest = i;
 				}
 			}
-			System.out.println(indexOfBest);
-			byte[] actionPerformed = {indexOfBest};
-			System.arraycopy(history, 0, actionPerformed, 0, actionPerformed.length);
-			history[indexOfBest] += 1;
+			//System.out.println(indexOfBest);
+			this.history += indexOfBest;
+			//history[indexOfBest] += 1;
 			
 			if (Arrays.deepEquals(cubeArray[indexOfBest].cube, this.goalCube.cube) ){
 				return cubeArray[indexOfBest];
@@ -129,7 +129,7 @@ class Search {
 			else{
 				costSoFar = fnArray[indexOfBest]; 
 				rotationsSoFar += 1;
-				RubixCube solution = aStar(cubeArray[indexOfBest], costSoFar, rotationsSoFar, bound, history);
+				RubixCube solution = aStar(cubeArray[indexOfBest], costSoFar, rotationsSoFar, bound);//, this.hist);
 				if(Arrays.deepEquals(solution.cube, this.goalCube.cube)){
 					return solution;
 				}
