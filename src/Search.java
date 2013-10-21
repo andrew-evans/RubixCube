@@ -75,7 +75,7 @@ class Search {
 	public String IDA() throws FileNotFoundException{
 		boolean solutionFound = false;
 		int bound = 1;
-		int rotationsSoFar = 0;
+		int rotationsSoFar = 1;
 		RubixCube solution = null;
 		int costSoFar = 0;
 		
@@ -86,7 +86,7 @@ class Search {
 			if(Arrays.deepEquals(solution.cube, this.goalCube.cube)){
 				solutionFound = true;
 			};
-			//bound += 1;
+			 bound += 1;
 		}
 		return this.history;
 	}
@@ -96,7 +96,7 @@ class Search {
 		//System.out.println("A*..."+rotationsSoFar);
 		//}
 		
-		if(rotationsSoFar < bound){
+		if(rotationsSoFar <= bound){
 			byte[] faceArray = {R,G,Y,B,O,W};
 			//byte[] history = hi st;
 			//byte fn = costSoFar + heuristic(cube);
