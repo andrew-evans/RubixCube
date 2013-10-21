@@ -95,7 +95,7 @@ class Search {
 		
 		if(rotationsSoFar < 5){
 			byte[] faceArray = {R,G,Y,B,O,W};
-			//byte[] history = hist;
+			//byte[] history = hist ;
 			//byte fn = costSoFar + heuristic(cube);
 			RubixCube node1 = cube;
 			RubixCube node2 = cube;
