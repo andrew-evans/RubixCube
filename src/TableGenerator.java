@@ -18,6 +18,8 @@ public class TableGenerator {
 	private int fuck;
 	private int shit;
 
+	private int[] moveLimit = {33, 30};
+
 	//Corner Cubie Locations
 	private final byte[][][] CCL = {
 		{{0,0}, {1,0}, {5,5}},
@@ -110,7 +112,7 @@ public class TableGenerator {
 			case (1): index = state.getIndexEdge1(); break;
 		}
 		//System.out.println(index);
-		if ((table[index] > count || table[index] == (byte)0) && count<= 33) {
+		if ((table[index] > count || table[index] == (byte) 0) && count<= moveLimit[type]) {
 			table[index] = count++;
 			for (byte i = R; i <= W; i++) {
 				//branch(state.rotateCube(i), count);

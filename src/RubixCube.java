@@ -365,7 +365,7 @@ public class RubixCube implements Comparable<RubixCube> {
 		String indexB = "0";
 		int currentCubieLocation, otherCubieLocation, currentOrientation;
 		
-		for (byte i=(byte) (ECV.length-1); i>=0; i--) {
+		for (int i=0; i<ECV.length; i++) {
 			byte z=0;
 
 			cubie = ECV[i];
@@ -389,7 +389,7 @@ public class RubixCube implements Comparable<RubixCube> {
 					}
 					indexA[i] -= counter;
 					remaining.remove(new Integer(currentCubieLocation));
-					
+
 					indexB += currentOrientation;
 
 					break;
@@ -405,7 +405,7 @@ public class RubixCube implements Comparable<RubixCube> {
 				indexA[1] * 5040 +
 				indexA[0] * 55440;
 		int b = Integer.parseInt(indexB, 2);
-		//System.out.println(Arrays.toString(indexA));
+		System.out.println(Arrays.toString(indexA));
 		//System.out.println("****a: " + a + "b: " + b + "****");
 		return a * 64 + b;
 	}
