@@ -7,7 +7,9 @@ import java.util.PriorityQueue;
 
 class Search {
 	
-	private byte[] table = new byte[88179840];
+	private byte[] table1 = new byte[88179840];
+	private byte[] table2 = new byte[42577920];
+	private byte[] table3 = new byte[42577920];
 	private final byte R = 0;
 	private final byte G = 1;
 	private final byte Y = 2;
@@ -172,7 +174,7 @@ class Search {
 	}
 	
 	public int heuristic(RubixCube cube){
-		return max(this.table[cube.getIndexCorner()],this.table[cube.getIndexEdge1()],this.table[cube.getIndexEdge2()]);
+		return max(this.table1[cube.getIndexCorner()],this.table2[cube.getIndexEdge1()],this.table3[cube.getIndexEdge2()]);
 	}
 }
 
