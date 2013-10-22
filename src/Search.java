@@ -26,7 +26,7 @@ class Search {
 		
 		this.goalCube = new RubixCube("goal.txt");
 		this.inputCube = new RubixCube(inputCube);
-		frontier = new PriorityQueue<RubixCube>();
+		this.frontier = new PriorityQueue<RubixCube>(11,new RubixCubeComparator());
 		
 		FileInputStream fis = new FileInputStream("heuristic-tables/cubie-table.txt");
 		int index = 0;
@@ -137,6 +137,7 @@ class Search {
 			//history[indexOfBest] += 1;
 			rotationsSoFar += 1;
 			System.out.println(this.frontier.element().toString());
+			
 			if (Arrays.deepEquals(this.frontier.element().cube, this.goalCube.cube) ){
 				return this.frontier.remove();
 			}

@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class RubixCube implements Comparable<RubixCube> {
@@ -405,7 +406,7 @@ public class RubixCube implements Comparable<RubixCube> {
 				indexA[1] * 5040 +
 				indexA[0] * 55440;
 		int b = Integer.parseInt(indexB, 2);
-		System.out.println(Arrays.toString(indexA));
+		//System.out.println(Arrays.toString(indexA));
 		//System.out.println("****a: " + a + "b: " + b + "****");
 		return a * 64 + b;
 	}
@@ -473,4 +474,19 @@ public class RubixCube implements Comparable<RubixCube> {
 		
 		
 	}
+}
+
+class RubixCubeComparator implements Comparator<RubixCube>{
+
+	@Override
+	public int compare(RubixCube arg0, RubixCube arg1) {
+		if(arg0.heuristic < arg1.heuristic){
+			return -1;
+		}else if(arg0.heuristic == arg1.heuristic){
+			return 0;
+		}else{
+			return 1;
+		}
+	}
+	
 }
