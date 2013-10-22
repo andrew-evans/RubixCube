@@ -98,7 +98,7 @@ class Search {
 		
 		if(rotationsSoFar <= bound){
 			byte[] faceArray = {R,G,Y,B,O,W};
-			//byte[] history = hi st;
+			//byte[] history = hist;
 			//byte fn = costSoFar + heuristic(cube);
 			RubixCube node1 = cube;
 			RubixCube node2 = cube;
