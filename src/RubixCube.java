@@ -76,12 +76,15 @@ public class RubixCube implements Comparable<RubixCube> {
 			{B,W}
 		};
 
-	public byte[][] cube = new byte[6][8];
+	private byte[][] cube = new byte[6][8];
 
 	public RubixCube(String filename) throws FileNotFoundException {
 		this.loadFromFile(filename);
 	}
-
+	
+	public RubixCube(byte[][] newCube){
+		this.cube = newCube;
+	}
 
 	public void loadFromFile(String filename) throws FileNotFoundException {
 		File f = new File(filename);
@@ -542,6 +545,14 @@ public class RubixCube implements Comparable<RubixCube> {
 	/*public String getActionPerformed(){
 		return this.actionPerformed;
 	}*/
+	
+	public byte[][] getCube(){
+		return this.cube;
+	}
+	
+	public static RubixCube newInstance(RubixCube toCopy){
+		return new RubixCube(toCopy.getCube());
+	}
 }
 
 class RubixCubeComparator implements Comparator<RubixCube>{
