@@ -4,8 +4,8 @@ import java.io.IOException;
 public class Test {
 
 	public static void main(String[] args) throws IOException {
-		//TableGenerator tg = new TableGenerator();
-		//tg.main();
+		TableGenerator tg = new TableGenerator();
+		tg.main();
 		
 	}
 

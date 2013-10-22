@@ -83,6 +83,7 @@ class Search {
 			int rotationsSoFar = 0;
 			int costSoFar = 0;
 			RubixCube solution = null;
+			System.out.println("*******Beginning of While before A* Call input cube=\n"+this.inputCube);
 			solution = aStar(this.inputCube, costSoFar, rotationsSoFar, bound);//, this.hist);
 			if(Arrays.deepEquals(solution.cube, this.goalCube.cube)){
 				solutionFound = true;
@@ -120,12 +121,6 @@ class Search {
 				fnArray[i] = costSoFar + heuristic;
 			}
 			
-			if(bound==11 && rotationsSoFar == 4){
-				System.out.println("***BEFORE SOLUTION***");
-				System.out.println(cube);
-				System.out.println(Arrays.toString(cubeArray));
-				System.out.println("***BEFORE SOLUTION***");
-			}
 			
 			for(int i=0; i<cubeArray.length; i++){
 				frontier.add(cubeArray[i]);
@@ -160,7 +155,7 @@ class Search {
 			}
 		}
 		System.out.println("bound reached in IDA"+bound);
-		return cube;
+		return this.frontier.remove();
 		
 		/*node1.rotateCube(R);
 		node2.rotateCube(R);

@@ -18,7 +18,7 @@ public class TableGenerator {
 	private int fuck;
 	private int shit;
 
-	private int[] moveLimit = {33, 30};
+	private int[] moveLimit = {33, 30, 30};
 
 	//Corner Cubie Locations
 	private final byte[][][] CCL = {
