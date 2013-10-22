@@ -31,19 +31,43 @@ class Search {
 		this.inputCube = new RubixCube(inputCubeFile);
 		this.frontier = new PriorityQueue<RubixCube>(11,new RubixCubeComparator());
 		
-		FileInputStream fis = new FileInputStream("heuristic-tables/cubie-table.txt");
+		FileInputStream fis1 = new FileInputStream("heuristic-tables/cubie-table.txt");
 		int index = 0;
-		while(index < table.length){
+		while(index < table1.length){
 			if(index % 1000000 == 0){
-				System.out.println("Reading...."+index);
+				System.out.println("Reading table1...."+index);
 			}
-			table[index] = (byte)fis.read();
+			table1[index] = (byte)fis1.read();
 			index++;
 		}
 		
-		fis.close();
+		fis1.close();
+		/*
+		FileInputStream fis2 = new FileInputStream("heuristic-tables/edge1cubie-table.txt");
+		index = 0;
+		while(index < table2.length){
+			if(index % 1000000 == 0){
+				System.out.println("Reading table2...."+index);
+			}
+			table2[index] = (byte)fis2.read();
+			index++;
+		}
 		
+		fis2.close();
 		
+		FileInputStream fis3 = new FileInputStream("heuristic-tables/edge2cubie-table.txt");
+		index = 0;
+		while(index < table3.length){
+			if(index % 1000000 == 0){
+				System.out.println("Reading table3...."+index);
+			}
+			table3[index] = (byte)fis3.read();
+			index++;
+		}
+		
+		fis3.close();
+		
+		*/
 		
 		//File f = new File("heuristic-tables/cubie-table.txt");
 		//Scanner s = new Scanner(f);
@@ -106,15 +130,19 @@ class Search {
 			
 			//byte[] history = hist;
 			//byte fn = costSoFar + heuristic(cube);
-			RubixCube node1 = RubixCube.newInstance(cube);
-			RubixCube node2 = RubixCube.newInstance(cube);
-			RubixCube node3 = RubixCube.newInstance(cube);
-			RubixCube node4 = RubixCube.newInstance(cube);
-			RubixCube node5 = RubixCube.newInstance(cube);
-			RubixCube node6 = RubixCube.newInstance(cube);
+			RubixCube node1 = RubixCube.newInstance(cube.getCube());
+			RubixCube node2 = RubixCube.newInstance(cube.getCube());
+			RubixCube node3 = RubixCube.newInstance(cube.getCube());
+			RubixCube node4 = RubixCube.newInstance(cube.getCube());
+			RubixCube node5 = RubixCube.newInstance(cube.getCube());
+			RubixCube node6 = RubixCube.newInstance(cube.getCube());
 			RubixCube[] cubeArray = {node1,node2,node3,node4,node5,node6};
 			
 			int[] fnArray = {-1,-1,-1,-1,-1,-1};
+			node1.rotateCube(R);
+			System.out.println(node1.toString());
+			node2.rotateCube(R);
+			System.out.println(node2.toString());
 			
 			for(int i=0; i<cubeArray.length; i++){
 				//cubeArray[i].rotateCube(faceArray[i]).rotateCube(faceArray[i]).rotateCube(faceArray[i]);
@@ -174,7 +202,7 @@ class Search {
 	}
 	
 	public int heuristic(RubixCube cube){
-		return max(this.table1[cube.getIndexCorner()],this.table2[cube.getIndexEdge1()],this.table3[cube.getIndexEdge2()]);
+		return Math.max(Math.max((int)this.table1[cube.getIndexCorner()],(int)this.table2[cube.getIndexEdge1()]),(int)this.table3[cube.getIndexEdge2()]);
 	}
 }
 

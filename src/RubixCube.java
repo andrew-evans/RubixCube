@@ -550,8 +550,13 @@ public class RubixCube implements Comparable<RubixCube> {
 		return this.cube;
 	}
 	
-	public static RubixCube newInstance(RubixCube toCopy){
-		return new RubixCube(toCopy.getCube());
+	public static RubixCube newInstance(byte[][] toCopy){
+		byte[][] array = new
+		for (int i=0;i<toCopy.length; i++){
+			
+		}
+		
+		return new RubixCube(toCopy);
 	}
 }
 
