@@ -16,7 +16,7 @@ class Search {
 	private final byte B = 3;
 	private final byte O = 4;
 	private final byte W = 5;
-	private String history = "";
+	private String history = "Moves: ";
 	public PriorityQueue<RubixCube> frontier;
 	private byte[] faceArray = {R,G,Y,B,O,W};
 	final RubixCube goalCube;
@@ -105,12 +105,12 @@ class Search {
 		while (!solutionFound){
 			this.frontier.clear();
 			//System.out.println("Beginning of While: "+rotationsSoFar);
-			this.history = "";
+			this.history = "Moves: ";
 			int rotationsSoFar = 0;
 			int costSoFar = 0;
 			RubixCube solution = null;
 			this.frontier.add(this.inputCube);
-			System.out.println("*******Beginning of While before A* Call input cube=\n"+this.inputCube);
+			//System.out.println("*******Beginning of While before A* Call input cube=\n"+this.inputCube);
 			solution = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound);//, this.hist);
 			if(Arrays.deepEquals(solution.getCube(), this.goalCube.getCube())){
 				solutionFound = true;
@@ -121,8 +121,8 @@ class Search {
 	}
 	
 	public RubixCube aStar(RubixCube cube, int costSoFar, int rotationsSoFar, int bound){//, byte[] hist){
-		/*if(rotationsSoFar % 10 == 0){
-			System.out.println("A*..."+bound);
+		/*if(rotationsSoFar % 1000 == 0){
+			System.out.println("A* working..."+bound);
 		}*/
 		//System.out.println("1st best node with bound: "+bound+" and rotation: "+rotationsSoFar+"\n"+cube);
 		if(rotationsSoFar < bound){
@@ -177,15 +177,15 @@ class Search {
 			//System.out.println("---------PQ---------");
 			//System.out.println("2nd best node with bound: "+bound+" and rotation: "+rotationsSoFar+"\n"+this.frontier.element().toString());
 			//System.out.println("Heuristic: "+this.frontier.element().getHeuristic());
-			System.out.println("Passed recursively from array @ index "+indexOfBest+"(lowest fn=" +fnArray[indexOfBest] +" ):\n"+cubeArray[indexOfBest].toString());
-			System.out.println("Passed recursively from PQ(lowest fn="+this.frontier.element().getfunctionVal()+" val):\n"+this.frontier.element().toString());
+			//System.out.println("Passed recursively from array @ index "+indexOfBest+"(lowest fn=" +fnArray[indexOfBest] +" ):\n"+cubeArray[indexOfBest].toString());
+			//System.out.println("Passed recursively from PQ(lowest fn="+this.frontier.element().getfunctionVal()+" val):\n"+this.frontier.element().toString());
 			rotationsSoFar += 1;
+			this.history += indexOfBest;
 			if (Arrays.deepEquals(this.frontier.element().getCube(), this.goalCube.getCube()) ){
 				return this.frontier.remove();
 			}
 			else{
 				costSoFar = this.frontier.element().getfunctionVal();// - costSoFar;
-				this.history += indexOfBest;
 				RubixCube solution = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound);//, this.hist);
 				if(Arrays.deepEquals(solution.getCube(), this.goalCube.getCube())){
 					return solution;
