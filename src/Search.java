@@ -29,7 +29,7 @@ class Search {
 		
 		this.goalCube = new RubixCube("goal.txt");
 		this.inputCube = new RubixCube(inputCubeFile);
-		this.frontier = new PriorityQueue<RubixCube>(11,new RubixCubeComparator());
+		this.frontier = new PriorityQueue<RubixCube>(50,new RubixCubeComparator());
 		
 		FileInputStream fis1 = new FileInputStream("heuristic-tables/cubie-table.txt");
 		int index = 0;
@@ -42,7 +42,7 @@ class Search {
 		}
 		
 		fis1.close();
-		/*
+		
 		FileInputStream fis2 = new FileInputStream("heuristic-tables/edge1cubie-table.txt");
 		index = 0;
 		while(index < table2.length){
@@ -67,7 +67,6 @@ class Search {
 		
 		fis3.close();
 		
-		*/
 		
 		//File f = new File("heuristic-tables/cubie-table.txt");
 		//Scanner s = new Scanner(f);
@@ -125,7 +124,7 @@ class Search {
 		/*if(rotationsSoFar % 10 == 0){
 			System.out.println("A*..."+bound);
 		}*/
-		System.out.println("1st best node with bound: "+bound+" and rotation: "+rotationsSoFar+"\n"+cube);
+		//System.out.println("1st best node with bound: "+bound+" and rotation: "+rotationsSoFar+"\n"+cube);
 		if(rotationsSoFar < bound){
 			
 			//byte[] history = hist;
@@ -139,21 +138,21 @@ class Search {
 			RubixCube[] cubeArray = {node1,node2,node3,node4,node5,node6};
 			
 			int[] fnArray = {-1,-1,-1,-1,-1,-1};
-			node1.rotateCube(R);
+			/*node1.rotateCube(R);
 			System.out.println(node1.toString());
 			node2.rotateCube(R);
-			System.out.println(node2.toString());
+			System.out.println(node2.toString());*/
 			
 			for(int i=0; i<cubeArray.length; i++){
 				//cubeArray[i].rotateCube(faceArray[i]).rotateCube(faceArray[i]).rotateCube(faceArray[i]);
-				System.out.println(i);
-				System.out.println("ORIGINAL: \n"+cubeArray[i]);
+				//System.out.println(i);
+				//System.out.println("ORIGINAL: \n"+cubeArray[i]);
 				cubeArray[i].rotateCube(this.faceArray[i]);
-				System.out.println("ROTATED: \n"+cubeArray[i]);
-				System.out.println(Arrays.toString(cubeArray));
+				//System.out.println("ROTATED: \n"+cubeArray[i]);
+				//System.out.println(Arrays.toString(cubeArray));
 				int heuristic = heuristic(cubeArray[i]);
-				cubeArray[i].setHeuristic(heuristic);
 				fnArray[i] = costSoFar + heuristic;
+				cubeArray[i].setfunctionVal(fnArray[i]);
 			}
 			
 			
@@ -173,17 +172,19 @@ class Search {
 			}
 			//System.out.println(indexOfBest);
 			//history[indexOfBest] += 1;
-			System.out.println("---------PQ---------");
-			System.out.println(this.frontier.toString());
-			System.out.println("---------PQ---------");
-			System.out.println("2nd best node with bound: "+bound+" and rotation: "+rotationsSoFar+"\n"+this.frontier.element().toString());
-			System.out.println("Heuristic: "+this.frontier.element().getHeuristic());
+			//System.out.println("---------PQ---------");
+			//System.out.println(this.frontier.toString());
+			//System.out.println("---------PQ---------");
+			//System.out.println("2nd best node with bound: "+bound+" and rotation: "+rotationsSoFar+"\n"+this.frontier.element().toString());
+			//System.out.println("Heuristic: "+this.frontier.element().getHeuristic());
+			System.out.println("Passed recursively from array @ index "+indexOfBest+"(lowest fn=" +fnArray[indexOfBest] +" ):\n"+cubeArray[indexOfBest].toString());
+			System.out.println("Passed recursively from PQ(lowest fn="+this.frontier.element().getfunctionVal()+" val):\n"+this.frontier.element().toString());
 			rotationsSoFar += 1;
 			if (Arrays.deepEquals(this.frontier.element().getCube(), this.goalCube.getCube()) ){
 				return this.frontier.remove();
 			}
 			else{
-				costSoFar += this.frontier.element().getHeuristic();
+				costSoFar = this.frontier.element().getfunctionVal();// - costSoFar;
 				this.history += indexOfBest;
 				RubixCube solution = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound);//, this.hist);
 				if(Arrays.deepEquals(solution.getCube(), this.goalCube.getCube())){
@@ -191,7 +192,7 @@ class Search {
 				}
 			}
 		}
-		System.out.println("bound reached in IDA"+bound);
+		//System.out.println("bound reached in IDA"+bound);
 		return this.frontier.remove();
 		
 		/*node1.rotateCube(R);

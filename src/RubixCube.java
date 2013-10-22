@@ -14,7 +14,7 @@ public class RubixCube implements Comparable<RubixCube> {
 	private final byte B = 3;
 	private final byte O = 4;
 	private final byte W = 5;
-	public int heuristic = 0;
+	public int functionVal = 0;
 
 	//corner cubie locations
 	private final byte[][][] CCL = {
@@ -522,25 +522,25 @@ public class RubixCube implements Comparable<RubixCube> {
 
 	@Override
 	public int compareTo(RubixCube rb) {
-		if(this.heuristic < rb.heuristic){
+		if(this.functionVal < rb.functionVal){
 			return -1;
-		}else if(this.heuristic == rb.heuristic){
+		}else if(this.functionVal == rb.functionVal){
 			return 0;
 		}else{
 			return 1;
 		}
 	}
 	
-	public void setHeuristic(int heuristic){
-		this.heuristic = heuristic;
+	public void setfunctionVal(int functionVal){
+		this.functionVal = functionVal;
 	}
 	
 	/*public void actionPerformed(String action){
 		this.actionPerformed = action;
 	}*/
 	
-	public int getHeuristic(){
-		return this.heuristic;
+	public int getfunctionVal(){
+		return this.functionVal;
 	}
 	/*public String getActionPerformed(){
 		return this.actionPerformed;
@@ -551,12 +551,14 @@ public class RubixCube implements Comparable<RubixCube> {
 	}
 	
 	public static RubixCube newInstance(byte[][] toCopy){
-		byte[][] array = new
-		for (int i=0;i<toCopy.length; i++){
-			
+		byte[][] array = new byte[6][8];
+		for (int i=0;i<6; i++){
+			for (int j=0; j<8; j++){
+				array[i][j] = toCopy[i][j];
+			}
 		}
 		
-		return new RubixCube(toCopy);
+		return new RubixCube(array);
 	}
 }
 
@@ -564,9 +566,9 @@ class RubixCubeComparator implements Comparator<RubixCube>{
 
 	@Override
 	public int compare(RubixCube arg0, RubixCube arg1) {
-		if(arg0.getHeuristic() < arg1.getHeuristic()){
+		if(arg0.getfunctionVal() < arg1.getfunctionVal()){
 			return -1;
-		}else if(arg0.getHeuristic() == arg1.getHeuristic()){
+		}else if(arg0.getfunctionVal() == arg1.getfunctionVal()){
 			return 0;
 		}else{
 			return 1;
