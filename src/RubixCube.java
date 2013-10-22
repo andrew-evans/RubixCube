@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class RubixCube implements Comparable<RubixCube> {
@@ -14,7 +15,6 @@ public class RubixCube implements Comparable<RubixCube> {
 	private final byte O = 4;
 	private final byte W = 5;
 	public int heuristic = 0;
-	public byte actionPerformed = 0;
 
 	//corner cubie locations
 	private final byte[][][] CCL = {
@@ -162,7 +162,6 @@ public class RubixCube implements Comparable<RubixCube> {
 	}
 
 	public RubixCube rotateCube(byte face) {
-		this.actionPerformed = face;
 		byte[][] start = new byte[6][8];
 		for (int i=0; i<6; i++) {
 			for (int j=0; j<8; j++) {
@@ -527,7 +526,35 @@ public class RubixCube implements Comparable<RubixCube> {
 		}else{
 			return 1;
 		}
-		
-		
 	}
+	
+	public void setHeuristic(int heuristic){
+		this.heuristic = heuristic;
+	}
+	
+	/*public void actionPerformed(String action){
+		this.actionPerformed = action;
+	}*/
+	
+	public int getHeuristic(){
+		return this.heuristic;
+	}
+	/*public String getActionPerformed(){
+		return this.actionPerformed;
+	}*/
+}
+
+class RubixCubeComparator implements Comparator<RubixCube>{
+
+	@Override
+	public int compare(RubixCube arg0, RubixCube arg1) {
+		if(arg0.getHeuristic() < arg1.getHeuristic()){
+			return -1;
+		}else if(arg0.getHeuristic() == arg1.getHeuristic()){
+			return 0;
+		}else{
+			return 1;
+		}
+	}
+	
 }

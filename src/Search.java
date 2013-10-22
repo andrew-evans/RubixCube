@@ -15,18 +15,19 @@ class Search {
 	private final byte O = 4;
 	private final byte W = 5;
 	private String history = "";
-	PriorityQueue<RubixCube> frontier;
-	RubixCube goalCube;
-	RubixCube inputCube;
-	public void init(String inputCube) throws IOException {
+	public PriorityQueue<RubixCube> frontier;
+	private byte[] faceArray = {R,G,Y,B,O,W};
+	final RubixCube goalCube;
+	final RubixCube inputCube;
+	public Search(String inputCubeFile) throws IOException {
 		
 		//TableGenerator test = new TableGenerator();
 		
 		//test.main();
 		
 		this.goalCube = new RubixCube("goal.txt");
-		this.inputCube = new RubixCube(inputCube);
-		frontier = new PriorityQueue<RubixCube>();
+		this.inputCube = new RubixCube(inputCubeFile);
+		this.frontier = new PriorityQueue<RubixCube>(11,new RubixCubeComparator());
 		
 		FileInputStream fis = new FileInputStream("heuristic-tables/cubie-table.txt");
 		int index = 0;
@@ -75,30 +76,30 @@ class Search {
 	public String IDA() throws FileNotFoundException{
 		boolean solutionFound = false;
 		int bound = 1;
-		int rotationsSoFar = 0;
-		RubixCube solution = null;
-		int costSoFar = 0;
 		
 		while (!solutionFound){
-			System.out.println("Beginning of While: "+rotationsSoFar);
+			//System.out.println("Beginning of While: "+rotationsSoFar);
 			this.history = "";
+			int rotationsSoFar = 0;
+			int costSoFar = 0;
+			RubixCube solution = null;
 			solution = aStar(this.inputCube, costSoFar, rotationsSoFar, bound);//, this.hist);
 			if(Arrays.deepEquals(solution.cube, this.goalCube.cube)){
 				solutionFound = true;
 			};
-			//bound += 1;
+			 bound += 1;
 		}
 		return this.history;
 	}
 	
 	public RubixCube aStar(RubixCube cube, int costSoFar, int rotationsSoFar, int bound){//, byte[] hist){
-		//if(rotationsSoFar % 10 == 0){
-		//System.out.println("A*..."+rotationsSoFar);
-		//}
-		
+		/*if(rotationsSoFar % 10 == 0){
+			System.out.println("A*..."+bound);
+		}*/
+		System.out.println("1st best node with bound: "+bound+" and rotation: "+rotationsSoFar+"\n"+cube);
 		if(rotationsSoFar < bound){
-			byte[] faceArray = {R,G,Y,B,O,W};
-			//byte[] history = hi st;
+			
+			//byte[] history = hist;
 			//byte fn = costSoFar + heuristic(cube);
 			RubixCube node1 = cube;
 			RubixCube node2 = cube;
@@ -113,8 +114,17 @@ class Search {
 			
 			for(int i=0; i<cubeArray.length; i++){
 				//cubeArray[i].rotateCube(faceArray[i]).rotateCube(faceArray[i]).rotateCube(faceArray[i]);
-				cubeArray[i].rotateCube(faceArray[i]);
-				fnArray[i] = costSoFar + heuristic(cubeArray[i]);
+				cubeArray[i].rotateCube(this.faceArray[i]);
+				int heuristic = heuristic(cubeArray[i]);
+				cubeArray[i].setHeuristic(heuristic);
+				fnArray[i] = costSoFar + heuristic;
+			}
+			
+			if(bound==11 && rotationsSoFar == 4){
+				System.out.println("***BEFORE SOLUTION***");
+				System.out.println(cube);
+				System.out.println(Arrays.toString(cubeArray));
+				System.out.println("***BEFORE SOLUTION***");
 			}
 			
 			for(int i=0; i<cubeArray.length; i++){
@@ -122,33 +132,35 @@ class Search {
 			}
 			
 			//System.out.println(Arrays.toString(fnArray));
-			//int smallestFn = 9999;
-			//byte indexOfBest = -1;
+			int smallestFn = 9999;
+			byte indexOfBest = -1;
 			//need to resolve ties
-			/*for(byte i=0; i<fnArray.length; i++){
+			for(byte i=0; i<fnArray.length; i++){
 				if (fnArray[i]<=smallestFn){
 					smallestFn = fnArray[i];
 					indexOfBest = i;
-					frontier.a;
 				}
-			}*/
+			}
 			//System.out.println(indexOfBest);
-			this.history += this.frontier.element().actionPerformed;
 			//history[indexOfBest] += 1;
+			
+			System.out.println("2nd best node with bound: "+bound+" and rotation: "+rotationsSoFar+"\n"+this.frontier.element().toString());
+			System.out.println("Heuristic: "+this.frontier.element().getHeuristic());
 			rotationsSoFar += 1;
-			System.out.println(this.frontier.element().toString());
 			if (Arrays.deepEquals(this.frontier.element().cube, this.goalCube.cube) ){
 				return this.frontier.remove();
 			}
 			else{
-				costSoFar += this.frontier.element().heuristic; 
+				costSoFar += this.frontier.element().getHeuristic();
+				this.history += indexOfBest;
 				RubixCube solution = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound);//, this.hist);
 				if(Arrays.deepEquals(solution.cube, this.goalCube.cube)){
 					return solution;
 				}
 			}
 		}
-		return this.frontier.remove();
+		System.out.println("bound reached in IDA"+bound);
+		return cube;
 		
 		/*node1.rotateCube(R);
 		node2.rotateCube(R);
