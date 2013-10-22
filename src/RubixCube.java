@@ -405,7 +405,64 @@ public class RubixCube implements Comparable<RubixCube> {
 				indexA[1] * 5040 +
 				indexA[0] * 55440;
 		int b = Integer.parseInt(indexB, 2);
-		System.out.println(Arrays.toString(indexA));
+		//System.out.println(Arrays.toString(indexA));
+		//System.out.println("****a: " + a + "b: " + b + "****");
+		return a * 64 + b;
+	}
+
+	//returns index of the edge-two cubie state
+	public int getIndexEdge2() {
+		byte[] cubie = new byte[2];
+		int[] indexA = new int[6];
+		int counter = 0;
+		ArrayList<Integer> remaining = new ArrayList<Integer>(12);
+		for (int cocksandwich=0; cocksandwich<12; cocksandwich++) {
+			remaining.add(cocksandwich);
+		}
+		String indexB = "0";
+		int currentCubieLocation, otherCubieLocation, currentOrientation;
+		
+		for (int i=0; i<SCV.length; i++) {
+			byte z=0;
+
+			cubie = SCV[i];
+
+			for (z=0; z<ECL.length; z++) {
+				if ((cube[ECL[z][0][0]][ECL[z][0][1]] == cubie[0] && cube[ECL[z][1][0]][ECL[z][1][1]] == cubie[1]) ||
+						(cube[ECL[z][0][0]][ECL[z][0][1]] == cubie[1] && cube[ECL[z][1][0]][ECL[z][1][1]] == cubie[0])) {
+					currentCubieLocation = z;// / 3;
+					counter = 0;
+					while (cube[ECL[z][counter][0]][ECL[z][counter][1]] != cubie[0]) {
+						counter += 1;
+					}
+					currentOrientation = counter;//z % 3;
+
+					indexA[i] = currentCubieLocation;
+					otherCubieLocation = currentCubieLocation;
+					counter = 0;
+					while (otherCubieLocation >= 0) {
+						if (!remaining.contains(otherCubieLocation--))
+							counter++;
+					}
+					indexA[i] -= counter;
+					remaining.remove(new Integer(currentCubieLocation));
+
+					indexB += currentOrientation;
+
+					break;
+				}
+			}
+			if (z==ECL.length)
+				System.out.println("didn't find a cubie value.  " + Arrays.toString(cubie));
+		}
+		int a = indexA[5] +
+				indexA[4] * 7 +
+				indexA[3] * 56 +
+				indexA[2] * 504 +
+				indexA[1] * 5040 +
+				indexA[0] * 55440;
+		int b = Integer.parseInt(indexB, 2);
+		//System.out.println(Arrays.toString(indexA));
 		//System.out.println("****a: " + a + "b: " + b + "****");
 		return a * 64 + b;
 	}
