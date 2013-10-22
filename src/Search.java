@@ -172,7 +172,7 @@ class Search {
 	}
 	
 	public int heuristic(RubixCube cube){
-		return this.table[cube.getIndexCorner()];
+		return max(this.table[cube.getIndexCorner()],this.table[cube.getIndexEdge1()],this.table[cube.getIndexEdge2()]);
 	}
 }
 
