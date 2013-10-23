@@ -108,11 +108,11 @@ class Search {
 		while (!solutionFound){
 			this.frontier.clear();
 			//System.out.println("Beginning of While: "+rotationsSoFar);
-			this.history = "Moves: ";
+			//this.history = "Moves: ";
 			int rotationsSoFar = 0;
 			int costSoFar = 0;
 			//RubixCube solution = null;
-			
+			path = new ArrayList<Integer>(); 
 			this.frontier.add(this.inputCube);
 			path = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, new ArrayList<Integer>());//, this.hist);
 			/*if(Arrays.deepEquals(solution.getCube(), this.goalCube.getCube())){
@@ -171,7 +171,7 @@ class Search {
 			
 			//System.out.println(Arrays.toString(fnArray));
 			//int smallestFn = 9999;
-			byte indexOfBest = -1;
+			//byte indexOfBest = -1;
 			/*			
 			for(byte i=0; i<fnArray.length; i++){
 				if (fnArray[i]<=smallestFn){
@@ -195,7 +195,7 @@ class Search {
 					indexOfBest = i;
 				}
 			}*/
-			this.history += this.frontier.element().lastMove + ", ";
+			//this.history += this.frontier.element().lastMove + ", ";
 			hist.add((int) this.frontier.element().lastMove);
 			return aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, hist);
 		}
