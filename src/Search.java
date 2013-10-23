@@ -29,7 +29,7 @@ class Search {
 		
 		this.goalCube = new RubixCube("goal.txt");
 		this.inputCube = new RubixCube(inputCubeFile);
-		this.frontier = new PriorityQueue<RubixCube>(50,new RubixCubeComparator());
+		this.frontier = new PriorityQueue<RubixCube>(11,new RubixCubeComparator());
 		
 		FileInputStream fis1 = new FileInputStream("heuristic-tables/cubie-table.txt");
 		int index = 0;
@@ -110,7 +110,6 @@ class Search {
 			int costSoFar = 0;
 			RubixCube solution = null;
 			this.frontier.add(this.inputCube);
-			//System.out.println("*******Beginning of While before A* Call input cube=\n"+this.inputCube);
 			solution = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound);//, this.hist);
 			if(Arrays.deepEquals(solution.getCube(), this.goalCube.getCube())){
 				solutionFound = true;
@@ -150,8 +149,8 @@ class Search {
 				cubeArray[i].rotateCube(this.faceArray[i]);
 				//System.out.println("ROTATED: \n"+cubeArray[i]);
 				//System.out.println(Arrays.toString(cubeArray));
-				int heuristic = heuristic(cubeArray[i]);
-				fnArray[i] = costSoFar + heuristic;
+				//int heuristic = heuristic(cubeArray[i]);
+				fnArray[i] = costSoFar + heuristic(cubeArray[i]);
 				cubeArray[i].setfunctionVal(fnArray[i]);
 			}
 			
@@ -161,15 +160,15 @@ class Search {
 			}
 			
 			//System.out.println(Arrays.toString(fnArray));
-			int smallestFn = 9999;
+			//int smallestFn = 9999;
 			byte indexOfBest = -1;
-			//need to resolve ties
+			/*			
 			for(byte i=0; i<fnArray.length; i++){
 				if (fnArray[i]<=smallestFn){
 					smallestFn = fnArray[i];
 					indexOfBest = i;
 				}
-			}
+			}*/
 			//System.out.println(indexOfBest);
 			//history[indexOfBest] += 1;
 			//System.out.println("---------PQ---------");
@@ -180,12 +179,18 @@ class Search {
 			//System.out.println("Passed recursively from array @ index "+indexOfBest+"(lowest fn=" +fnArray[indexOfBest] +" ):\n"+cubeArray[indexOfBest].toString());
 			//System.out.println("Passed recursively from PQ(lowest fn="+this.frontier.element().getfunctionVal()+" val):\n"+this.frontier.element().toString());
 			rotationsSoFar += 1;
+			costSoFar += 1;
+			for(byte i=0; i<cubeArray.length; i++){
+				if(this.frontier.element().getCube() == cubeArray[i].getCube()){
+					indexOfBest = i;
+				}
+			}
 			this.history += indexOfBest;
 			if (Arrays.deepEquals(this.frontier.element().getCube(), this.goalCube.getCube()) ){
 				return this.frontier.remove();
 			}
 			else{
-				costSoFar = this.frontier.element().getfunctionVal();// - costSoFar;
+				// - costSoFar;
 				RubixCube solution = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound);//, this.hist);
 				if(Arrays.deepEquals(solution.getCube(), this.goalCube.getCube())){
 					return solution;
@@ -193,7 +198,7 @@ class Search {
 			}
 		}
 		//System.out.println("bound reached in IDA"+bound);
-		return this.frontier.remove();
+		return cube;
 		
 		/*node1.rotateCube(R);
 		node2.rotateCube(R);

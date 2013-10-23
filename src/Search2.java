@@ -21,6 +21,7 @@ class Search2 {
 	private byte[] faceArray = {R,G,Y,B,O,W};
 	final RubixCube goalCube;
 	final RubixCube inputCube;
+	
 	public Search2(String inputCubeFile) throws IOException {
 		
 		//TableGenerator test = new TableGenerator();

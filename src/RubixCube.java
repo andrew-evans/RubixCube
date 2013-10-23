@@ -375,9 +375,7 @@ public class RubixCube implements Comparable<RubixCube> {
 		int currentCubieLocation, otherCubieLocation, currentOrientation;
 		
 		for (int i=0; i<ECV.length; i++) {
-			byte z=0;public RubixCube(byte[][] newCube){
-		this.cube = newCube;
-	}
+			byte z=0;
 
 			cubie = ECV[i];
 
