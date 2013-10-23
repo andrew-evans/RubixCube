@@ -16,6 +16,7 @@ public class RubixCube implements Comparable<RubixCube> {
 	private final byte W = 5;
 	public int functionVal = 0;
 	public int cost = 0;
+	public byte lastMove = 0;
 
 	//corner cubie locations
 	private final byte[][][] CCL = {
@@ -87,10 +88,11 @@ public class RubixCube implements Comparable<RubixCube> {
 		this.cube = newCube;
 	}
 
-	public RubixCube(byte[][] newCube, int fn, int cost){
+	public RubixCube(byte[][] newCube, int fn, int cost, byte move){
 		this.cube = newCube;
 		this.functionVal = fn;
 		this.cost = cost;
+		this.lastMove = move;
 	}
 
 	public void loadFromFile(String filename) throws FileNotFoundException {
@@ -568,7 +570,7 @@ public class RubixCube implements Comparable<RubixCube> {
 		return new RubixCube(array);
 	}
 
-	public static RubixCube newInstance(byte[][] toCopy, int fn, int cost){
+	public static RubixCube newInstance(byte[][] toCopy, int fn, int cost, byte move){
 		byte[][] array = new byte[6][8];
 		for (int i=0;i<6; i++){
 			for (int j=0; j<8; j++){
@@ -576,7 +578,7 @@ public class RubixCube implements Comparable<RubixCube> {
 			}
 		}
 		
-		return new RubixCube(array, fn, cost);
+		return new RubixCube(array, fn, cost, move);
 	}
 }
 

@@ -70,25 +70,28 @@ class Search2 {
 	}
 	
 	public String ASearch() throws FileNotFoundException{
-		aStar(this.inputCube);
+		this.history = aStar(this.inputCube, new ArrayList<byte>(0));
 		
 		return this.history;
 	}
 	
-	public RubixCube aStar(RubixCube state){//, byte[] hist){
+	public RubixCube aStar(RubixCube state, ArrayList<byte> hist){
 		if (heuristic(state) == 0) {
-			return state;
+			return hist;
 		}
 		
-		for (byte i=0; i<6; i++) {
-			RubixCube current = RubixCube.newInstance(state.rotateCube(i).getCube(), state.functionVal, state.cost + 1);
+		byte i;
+		for (i=0; i<6; i++) {
+			RubixCube current = RubixCube.newInstance(state.rotateCube(i).getCube(), state.functionVal, state.cost + 1, i);
 			current.functionVal = current.cost + heuristic(current);
 			frontier.add(current);
 		}
 		
 		RubixCube nextState = frontier.remove();
+		hist.add(i);
+		
 		System.out.println(nextState);
-		return aStar(nextState);
+		return aStar(nextState, hist);
 	}
 	
 	public int heuristic(RubixCube cube){
