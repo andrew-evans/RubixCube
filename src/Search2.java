@@ -18,6 +18,7 @@ class Search2 {
 	private final byte W = 5;
 	private ArrayList<Integer> history = new ArrayList<Integer>();
 	public PriorityQueue<RubixCube> frontier;
+	private boolean success = false;
 	private byte[] faceArray = {R,G,Y,B,O,W};
 	final RubixCube goalCube;
 	final RubixCube inputCube;
@@ -70,13 +71,24 @@ class Search2 {
 	}
 	
 	public ArrayList<Integer> ASearch() throws FileNotFoundException{
-		this.history = aStar(this.inputCube, new ArrayList<Integer>(0));
+		int bound = 0;
+		while (!success) {
+			System.out.println("Searching with bound " + bound);
+			frontier.clear();
+			this.history = aStar(this.inputCube, new ArrayList<Integer>(0), bound);
+			bound += 1;
+		}
 		
 		return this.history;
 	}
 	
-	public ArrayList<Integer> aStar(RubixCube state, ArrayList<Integer> hist){
+	public ArrayList<Integer> aStar(RubixCube state, ArrayList<Integer> hist, int bound) {
+		if (state.cost >= bound) {
+			return hist;
+		}
+		
 		if (heuristic(state) == 0) {
+			this.success = true;
 			return hist;
 		}
 		
@@ -90,15 +102,15 @@ class Search2 {
 		
 		RubixCube nextState = frontier.remove();
 		System.out.println("Chose state with function value " + nextState.functionVal);
-		hist.add((int) i);
+		hist.add((int) nextState.lastMove);
 		
 		System.out.println(nextState);
-		return aStar(nextState, hist);
+		return aStar(nextState, hist, bound);
 	}
 	
 	public int heuristic(RubixCube cube){
-		return (int)this.table2[cube.getIndexEdge1()];
-		//return Math.max(Math.max((int)this.table1[cube.getIndexCorner()],(int)this.table2[cube.getIndexEdge1()]),(int)this.table3[cube.getIndexEdge2()]);
+		//return (int)this.table2[cube.getIndexEdge1()];
+		return Math.max(Math.max((int)this.table1[cube.getIndexCorner()],(int)this.table2[cube.getIndexEdge1()]),(int)this.table3[cube.getIndexEdge2()]);
 	}
 }
 
