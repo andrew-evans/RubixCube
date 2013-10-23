@@ -102,7 +102,7 @@ class Search {
 	}
 	
 	public ArrayList<Integer> IDA() throws FileNotFoundException{
-		boolean solutionFound = false;
+		//boolean solutionFound = false;
 		int bound = 1;
 		ArrayList<Integer> path = new ArrayList<Integer>();
 		//System.out.println(heuristic(this.goalCube));
