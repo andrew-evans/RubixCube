@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
-
+// :3
 class Search2 {
 	
 	private byte[] table1 = new byte[88179840];
