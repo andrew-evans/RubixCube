@@ -85,9 +85,11 @@ class Search2 {
 			RubixCube current = RubixCube.newInstance(state.rotateCube(i).getCube(), state.functionVal, state.cost + 1, i);
 			current.functionVal = current.cost + heuristic(current);
 			frontier.add(current);
+			System.out.println("Rotate " + i + ":  " + current.cost + " + " heuristic(current));
 		}
 		
 		RubixCube nextState = frontier.remove();
+		System.out.println("Chose state with function value " + nextState.functionVal);
 		hist.add((int) i);
 		
 		System.out.println(nextState);
