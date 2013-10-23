@@ -1,6 +1,7 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
@@ -99,9 +100,10 @@ class Search {
 		*/
 	}
 	
-	public String IDA() throws FileNotFoundException{
+	public ArrayList<Integer> IDA() throws FileNotFoundException{
 		boolean solutionFound = false;
 		int bound = 1;
+		ArrayList<Integer> path = new ArrayList<Integer>();
 		//System.out.println(heuristic(this.goalCube));
 		while (!solutionFound){
 			this.frontier.clear();
@@ -109,14 +111,13 @@ class Search {
 			this.history = "Moves: ";
 			int rotationsSoFar = 0;
 			int costSoFar = 0;
-			RubixCube solution = null;
+			//RubixCube solution = null;
 			
-			ArrayList<Integer> path = new ArrayList<Integer>();
 			this.frontier.add(this.inputCube);
 			path = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, new ArrayList<Integer>());//, this.hist);
-			if(Arrays.deepEquals(solution.getCube(), this.goalCube.getCube())){
+			/*if(Arrays.deepEquals(solution.getCube(), this.goalCube.getCube())){
 				solutionFound = true;
-			};
+			};*/
 			 bound += 1;
 		}
 		return path;
@@ -197,6 +198,8 @@ class Search {
 			this.history += this.frontier.element().lastMove + ", ";
 			hist.add((int) this.frontier.element().lastMove);
 			return aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, hist);
+		}
+		return hist;
 			
 			/*if (Arrays.deepEquals(this.frontier.element().getCube(), this.goalCube.getCube()) ){
 				return this.frontier.remove();
