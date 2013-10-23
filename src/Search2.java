@@ -1,7 +1,7 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 // :3
@@ -16,7 +16,7 @@ class Search2 {
 	private final byte B = 3;
 	private final byte O = 4;
 	private final byte W = 5;
-	private String history = "Moves: ";
+	private ArrayList<Integer> history = new ArrayList<Integer>();
 	public PriorityQueue<RubixCube> frontier;
 	private byte[] faceArray = {R,G,Y,B,O,W};
 	final RubixCube goalCube;
@@ -32,7 +32,7 @@ class Search2 {
 		this.inputCube = new RubixCube(inputCubeFile);
 		this.frontier = new PriorityQueue<RubixCube>(100,new RubixCubeComparator());
 		
-		FileInputStream fis1 = new FileInputStream("heuristic-tables/cubie-table.txt");
+		FileInputStream fis1 = new FileInputStream("heuristic-tables/cornercubie-table.txt");
 		int index = 0;
 		while(index < table1.length){
 			if(index % 1000000 == 0){
@@ -69,13 +69,13 @@ class Search2 {
 		fis3.close();
 	}
 	
-	public String ASearch() throws FileNotFoundException{
-		this.history = aStar(this.inputCube, new ArrayList<byte>(0));
+	public ArrayList<Integer> ASearch() throws FileNotFoundException{
+		this.history = aStar(this.inputCube, new ArrayList<Integer>(0));
 		
 		return this.history;
 	}
 	
-	public RubixCube aStar(RubixCube state, ArrayList<byte> hist){
+	public ArrayList<Integer> aStar(RubixCube state, ArrayList<Integer> hist){
 		if (heuristic(state) == 0) {
 			return hist;
 		}
@@ -88,7 +88,7 @@ class Search2 {
 		}
 		
 		RubixCube nextState = frontier.remove();
-		hist.add(i);
+		hist.add((int) i);
 		
 		System.out.println(nextState);
 		return aStar(nextState, hist);

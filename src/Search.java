@@ -31,7 +31,7 @@ class Search {
 		this.inputCube = new RubixCube(inputCubeFile);
 		this.frontier = new PriorityQueue<RubixCube>(11,new RubixCubeComparator());
 		
-		FileInputStream fis1 = new FileInputStream("heuristic-tables/cubie-table.txt");
+		FileInputStream fis1 = new FileInputStream("heuristic-tables/cornercubie-table.txt");
 		int index = 0;
 		while(index < table1.length){
 			if(index % 1000000 == 0){
@@ -208,9 +208,9 @@ class Search {
 	}
 	
 	public int heuristic(RubixCube cube){
-		System.out.println(""+(int)this.table1[cube.getIndexCorner()]);
-		System.out.println(""+(int)this.table2[cube.getIndexEdge1()]);
-		System.out.println(""+(int)this.table3[cube.getIndexEdge2()]);
+		//System.out.println(""+(int)this.table1[cube.getIndexCorner()]);
+		//System.out.println(""+(int)this.table2[cube.getIndexEdge1()]);
+		//System.out.println(""+(int)this.table3[cube.getIndexEdge2()]);
 		return Math.max(Math.max((int)this.table1[cube.getIndexCorner()],(int)this.table2[cube.getIndexEdge1()]),(int)this.table3[cube.getIndexEdge2()]);
 	}
 }
