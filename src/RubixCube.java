@@ -567,6 +567,17 @@ public class RubixCube implements Comparable<RubixCube> {
 		
 		return new RubixCube(array);
 	}
+
+	public static RubixCube newInstance(byte[][] toCopy, int fn, int cost){
+		byte[][] array = new byte[6][8];
+		for (int i=0;i<6; i++){
+			for (int j=0; j<8; j++){
+				array[i][j] = toCopy[i][j];
+			}
+		}
+		
+		return new RubixCube(array, fn, cost);
+	}
 }
 
 class RubixCubeComparator implements Comparator<RubixCube>{
