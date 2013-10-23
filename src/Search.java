@@ -22,6 +22,7 @@ class Search {
 	private byte[] faceArray = {R,G,Y,B,O,W};
 	final RubixCube goalCube;
 	final RubixCube inputCube;
+	private boolean success = false;
 	public Search(String inputCubeFile) throws IOException {
 		
 		//TableGenerator test = new TableGenerator();
@@ -105,7 +106,7 @@ class Search {
 		int bound = 1;
 		ArrayList<Integer> path = new ArrayList<Integer>();
 		//System.out.println(heuristic(this.goalCube));
-		while (!solutionFound){
+		while (!success){
 			this.frontier.clear();
 			//System.out.println("Beginning of While: "+rotationsSoFar);
 			//this.history = "Moves: ";
@@ -127,6 +128,7 @@ class Search {
 	public ArrayList<Integer> aStar(RubixCube cube, int costSoFar, int rotationsSoFar, int bound, ArrayList<Integer> hist){
 	
 		if (heuristic(cube) == 0) {
+			this.success = true;
 			return hist;
 		}
 			
