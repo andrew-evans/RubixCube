@@ -57,9 +57,9 @@ public class TableGenerator {
 	private RubixCube goal;
 
 	public void main() throws FileNotFoundException {
-		this.makeEdge2CubieTable();
+		this.makeEdge1CubieTable();
 
-		String file = "heuristic-tables/edge2cubie-table.txt";
+		String file = "heuristic-tables/edge1cubie-table.txt";
 		//BufferedOutputStream bos = null;
 		try{
 			//Create an object of FileOutputStream
@@ -88,6 +88,9 @@ public class TableGenerator {
 	public void makeCornerCubieTable() throws FileNotFoundException {
 		goal = new RubixCube("goal-cubies.txt");
 		table = new byte[88179840]; //280805332   561610664
+		for (int i=0; i<table.length; i++) {
+			table[i] = (byte) 255;
+		}
 
 		branch(goal, (byte) 0, 0);
 	}
@@ -95,6 +98,9 @@ public class TableGenerator {
 	public void makeEdge1CubieTable() throws FileNotFoundException {
 		goal = new RubixCube("goal-edges1.txt");
 		table = new byte[42577920];
+		for (int i=0; i<table.length; i++) {
+			table[i] = (byte) 255;
+		}
 
 		branch(goal, (byte) 0, 1);
 	}
@@ -102,6 +108,9 @@ public class TableGenerator {
 	public void makeEdge2CubieTable() throws FileNotFoundException {
 		goal = new RubixCube("goal-edges2.txt");
 		table = new byte[42577920];
+		for (int i=0; i<table.length; i++) {
+			table[i] = (byte) 255;
+		}
 
 		branch(goal, (byte) 0, 2);
 	}
@@ -120,7 +129,7 @@ public class TableGenerator {
 			case (2): index = state.getIndexEdge2(); break;
 		}
 		//System.out.println(index);
-		if ((table[index] > count || table[index] == (byte) 0) && count<= moveLimit[type]) {
+		if (table[index] > count && count<= moveLimit[type]) {
 			table[index] = count++;
 			for (byte i = R; i <= W; i++) {
 				//branch(state.rotateCube(i), count);
