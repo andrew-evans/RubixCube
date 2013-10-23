@@ -2,8 +2,6 @@
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TableGenerator {
 
@@ -57,27 +55,33 @@ public class TableGenerator {
 	private RubixCube goal;
 
 	public void main() throws FileNotFoundException {
-		this.makeEdge1CubieTable();
-
-		String file = "heuristic-tables/edge1cubie-table.txt";
-		//BufferedOutputStream bos = null;
+		this.makeCornerCubieTable();
+		String file = "heuristic-tables/cornercubie-table.txt";
 		try{
-			//Create an object of FileOutputStream
-			//PrintWriter writer = new PrintWriter(file, "UTF-8");
-			FileOutputStream fos = new FileOutputStream(file);//new File(file));
-			//FileWriter writer = new FileWriter(file);
-			//create an object of BufferedOutputStream
-			//BufferedOutputStream bos = new BufferedOutputStream(fos);
+			FileOutputStream fos = new FileOutputStream(file);
 			byte[] table = this.table;
-			/*for (int i=0; i<table.length; i++) {
-				System.out.println(table[i]);
-				//fos.write(table[i]);
-				//fos.write(",");
-				//fos.write("\n");
-			}*/
-			//writer.flush();
-			//writer.close();
-			//writer.close();
+			fos.write(table);
+			fos.close();
+		}catch(IOException e){
+			System.err.println(e);
+		}
+		
+		this.makeEdge1CubieTable();
+		file = "heuristic-tables/edge1cubie-table.txt";
+		try{
+			FileOutputStream fos = new FileOutputStream(file);
+			byte[] table = this.table;
+			fos.write(table);
+			fos.close();
+		}catch(IOException e){
+			System.err.println(e);
+		}
+		
+		this.makeEdge2CubieTable();
+		file = "heuristic-tables/edge2cubie-table.txt";
+		try{
+			FileOutputStream fos = new FileOutputStream(file);
+			byte[] table = this.table;
 			fos.write(table);
 			fos.close();
 		}catch(IOException e){
@@ -89,7 +93,7 @@ public class TableGenerator {
 		goal = new RubixCube("goal-cubies.txt");
 		table = new byte[88179840]; //280805332   561610664
 		for (int i=0; i<table.length; i++) {
-			table[i] = (byte) 255;
+			table[i] = (byte) 127;
 		}
 
 		branch(goal, (byte) 0, 0);
@@ -99,7 +103,7 @@ public class TableGenerator {
 		goal = new RubixCube("goal-edges1.txt");
 		table = new byte[42577920];
 		for (int i=0; i<table.length; i++) {
-			table[i] = (byte) 255;
+			table[i] = (byte) 127;
 		}
 
 		branch(goal, (byte) 0, 1);
@@ -109,7 +113,7 @@ public class TableGenerator {
 		goal = new RubixCube("goal-edges2.txt");
 		table = new byte[42577920];
 		for (int i=0; i<table.length; i++) {
-			table[i] = (byte) 255;
+			table[i] = (byte) 127;
 		}
 
 		branch(goal, (byte) 0, 2);
@@ -121,14 +125,13 @@ public class TableGenerator {
 		if (++fuck % 1000000 == 0) {
 			System.out.println("" + fuck + " recursions: " + shit + " active.");
 		}
-
 		int index = 0;
 		switch (type) {
 			case (0): index = state.getIndexCorner(); break;
 			case (1): index = state.getIndexEdge1(); break;
 			case (2): index = state.getIndexEdge2(); break;
 		}
-		//System.out.println(index);
+		//System.out.println(table[index]);
 		if (table[index] > count && count<= moveLimit[type]) {
 			table[index] = count++;
 			for (byte i = R; i <= W; i++) {

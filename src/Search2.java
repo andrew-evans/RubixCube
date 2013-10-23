@@ -81,6 +81,7 @@ class Search2 {
 		}
 		
 		for (byte i=0; i<6; i++) {
+			//TODO: fix shallow copy here
 			RubixCube current = new RubixCube(state.rotateCube(i).getCube(), state.functionVal, state.cost + 1);
 			current.functionVal = current.cost + heuristic(current);
 			frontier.add(current);
