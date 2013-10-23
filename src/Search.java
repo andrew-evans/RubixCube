@@ -7,9 +7,9 @@ import java.util.PriorityQueue;
 
 class Search {
 	
-	private byte[] table1 = new byte[88179840];
-	private byte[] table2 = new byte[42577920];
-	private byte[] table3 = new byte[42577920];
+	protected byte[] table1 = new byte[88179840];
+	protected byte[] table2 = new byte[42577920];
+	protected byte[] table3 = new byte[42577920];
 	private final byte R = 0;
 	private final byte G = 1;
 	private final byte Y = 2;
@@ -101,7 +101,7 @@ class Search {
 	public String IDA() throws FileNotFoundException{
 		boolean solutionFound = false;
 		int bound = 1;
-		
+		//System.out.println(heuristic(this.goalCube));
 		while (!solutionFound){
 			this.frontier.clear();
 			//System.out.println("Beginning of While: "+rotationsSoFar);
@@ -208,6 +208,9 @@ class Search {
 	}
 	
 	public int heuristic(RubixCube cube){
+		System.out.println(""+(int)this.table1[cube.getIndexCorner()]);
+		System.out.println(""+(int)this.table2[cube.getIndexEdge1()]);
+		System.out.println(""+(int)this.table3[cube.getIndexEdge2()]);
 		return Math.max(Math.max((int)this.table1[cube.getIndexCorner()],(int)this.table2[cube.getIndexEdge1()]),(int)this.table3[cube.getIndexEdge2()]);
 	}
 }
