@@ -124,6 +124,11 @@ class Search {
 	}
 	
 	public ArrayList<Integer> aStar(RubixCube cube, int costSoFar, int rotationsSoFar, int bound, ArrayList<Integer> hist){
+	
+		if (heuristic(cube) == 0) {
+			return hist;
+		}
+			
 		/*if(rotationsSoFar % 1000 == 0){
 			System.out.println("A* working..."+bound);
 		}*/
@@ -191,19 +196,21 @@ class Search {
 			}*/
 			this.history += this.frontier.element().lastMove + ", ";
 			hist.add((int) this.frontier.element().lastMove);
-			if (Arrays.deepEquals(this.frontier.element().getCube(), this.goalCube.getCube()) ){
+			return aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, hist);
+			
+			/*if (Arrays.deepEquals(this.frontier.element().getCube(), this.goalCube.getCube()) ){
 				return this.frontier.remove();
 			}
 			else{
 				// - costSoFar;
-				aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, hist);//, this.hist);
-				if(Arrays.deepEquals(solution.getCube(), this.goalCube.getCube())){
-					return hist;
-				}
+				//return aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, hist);//, this.hist);
+				//if(Arrays.deepEquals(solution.getCube(), this.goalCube.getCube())){
+				//	return hist;
+				//}
 			}
 		}
 		//System.out.println("bound reached in IDA"+bound);
-		return cube;
+		//return cube;
 		
 		/*node1.rotateCube(R);
 		node2.rotateCube(R);
