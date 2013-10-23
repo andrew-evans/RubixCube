@@ -110,17 +110,20 @@ class Search {
 			int rotationsSoFar = 0;
 			int costSoFar = 0;
 			RubixCube solution = null;
+			
+			ArrayList<Integer> path = new ArrayList<Integer>();
 			this.frontier.add(this.inputCube);
-			solution = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound);//, this.hist);
+			path = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, new ArrayList<Integer>());//, this.hist);
 			if(Arrays.deepEquals(solution.getCube(), this.goalCube.getCube())){
 				solutionFound = true;
 			};
 			 bound += 1;
 		}
-		return this.history;
+		return path;
+		//return this.history;
 	}
 	
-	public RubixCube aStar(RubixCube cube, int costSoFar, int rotationsSoFar, int bound){//, byte[] hist){
+	public ArrayList<Integer> aStar(RubixCube cube, int costSoFar, int rotationsSoFar, int bound, ArrayList<Integer> hist){
 		/*if(rotationsSoFar % 1000 == 0){
 			System.out.println("A* working..."+bound);
 		}*/
@@ -187,14 +190,15 @@ class Search {
 				}
 			}*/
 			this.history += this.frontier.element().lastMove + ", ";
+			hist.add((int) this.frontier.element().lastMove);
 			if (Arrays.deepEquals(this.frontier.element().getCube(), this.goalCube.getCube()) ){
 				return this.frontier.remove();
 			}
 			else{
 				// - costSoFar;
-				RubixCube solution = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound);//, this.hist);
+				aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, hist);//, this.hist);
 				if(Arrays.deepEquals(solution.getCube(), this.goalCube.getCube())){
-					return solution;
+					return hist;
 				}
 			}
 		}
