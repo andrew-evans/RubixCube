@@ -29,6 +29,7 @@ class Search {
 		
 		this.goalCube = new RubixCube("goal.txt");
 		this.inputCube = new RubixCube(inputCubeFile);
+		this.inputCube.rotateCube(Y).rotateCube(Y).rotateCube(Y).rotateCube(B).rotateCube(B).rotateCube(B);
 		this.frontier = new PriorityQueue<RubixCube>(11,new RubixCubeComparator());
 		
 		FileInputStream fis1 = new FileInputStream("heuristic-tables/cornercubie-table.txt");
@@ -180,12 +181,12 @@ class Search {
 			//System.out.println("Passed recursively from PQ(lowest fn="+this.frontier.element().getfunctionVal()+" val):\n"+this.frontier.element().toString());
 			rotationsSoFar += 1;
 			costSoFar += 1;
-			for(byte i=0; i<cubeArray.length; i++){
+			/*for(byte i=0; i<cubeArray.length; i++){
 				if(this.frontier.element().getCube() == cubeArray[i].getCube()){
 					indexOfBest = i;
 				}
-			}
-			this.history += indexOfBest;
+			}*/
+			this.history += this.frontier.element().lastMove + ", ";
 			if (Arrays.deepEquals(this.frontier.element().getCube(), this.goalCube.getCube()) ){
 				return this.frontier.remove();
 			}

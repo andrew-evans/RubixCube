@@ -7,8 +7,7 @@ public class Test2 {
 	public static void main(String[] args) throws IOException {
 		//TableGenerator tg = new TableGenerator();
 		//tg.main();
-		
-		Search s = new Search("rubbix.txt");
+		Search s = new Search("goal.txt");
 		//RubixCube goal = new RubixCube("goal.txt");
 		/*System.out.println(""+(int)s.table1[goal.getIndexCorner()]);
 		System.out.println(""+(int)s.table2[goal.getIndexEdge1()]);

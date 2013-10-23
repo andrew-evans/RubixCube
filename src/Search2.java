@@ -32,9 +32,9 @@ class Search2 {
 		this.inputCube = new RubixCube(inputCubeFile);
 		this.frontier = new PriorityQueue<RubixCube>(100,new RubixCubeComparator());
 		
-		FileInputStream fis1 = new FileInputStream("heuristic-tables/cornercubie-table.txt");
+		//FileInputStream fis1 = new FileInputStream("heuristic-tables/cornercubie-table.txt");
 		int index = 0;
-		while(index < table1.length){
+		/*while(index < table1.length){
 			if(index % 1000000 == 0){
 				System.out.println("Reading table1...."+index);
 			}
@@ -42,7 +42,7 @@ class Search2 {
 			index++;
 		}
 		
-		fis1.close();
+		fis1.close();*/
 		
 		FileInputStream fis2 = new FileInputStream("heuristic-tables/edge1cubie-table.txt");
 		index = 0;
@@ -55,7 +55,7 @@ class Search2 {
 		}
 		
 		fis2.close();
-		
+		/*
 		FileInputStream fis3 = new FileInputStream("heuristic-tables/edge2cubie-table.txt");
 		index = 0;
 		while(index < table3.length){
@@ -66,7 +66,7 @@ class Search2 {
 			index++;
 		}
 		
-		fis3.close();
+		fis3.close();*/
 	}
 	
 	public ArrayList<Integer> ASearch() throws FileNotFoundException{
@@ -85,7 +85,7 @@ class Search2 {
 			RubixCube current = RubixCube.newInstance(state.rotateCube(i).getCube(), state.functionVal, state.cost + 1, i);
 			current.functionVal = current.cost + heuristic(current);
 			frontier.add(current);
-			System.out.println("Rotate " + i + ":  " + current.cost + " + " heuristic(current));
+			System.out.println("Rotate " + i + ":  " + current.cost + " + " + heuristic(current));
 		}
 		
 		RubixCube nextState = frontier.remove();
@@ -97,7 +97,8 @@ class Search2 {
 	}
 	
 	public int heuristic(RubixCube cube){
-		return Math.max(Math.max((int)this.table1[cube.getIndexCorner()],(int)this.table2[cube.getIndexEdge1()]),(int)this.table3[cube.getIndexEdge2()]);
+		return (int)this.table2[cube.getIndexEdge1()];
+		//return Math.max(Math.max((int)this.table1[cube.getIndexCorner()],(int)this.table2[cube.getIndexEdge1()]),(int)this.table3[cube.getIndexEdge2()]);
 	}
 }
 

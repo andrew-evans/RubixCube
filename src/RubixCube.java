@@ -174,6 +174,7 @@ public class RubixCube implements Comparable<RubixCube> {
 	}
 
 	public RubixCube rotateCube(byte face) {
+		this.lastMove = face;
 		byte[][] start = new byte[6][8];
 		for (int i=0; i<6; i++) {
 			for (int j=0; j<8; j++) {
