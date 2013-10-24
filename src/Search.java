@@ -11,15 +11,15 @@ class Search {
 	protected byte[] table1 = new byte[88179840];
 	protected byte[] table2 = new byte[42577920];
 	protected byte[] table3 = new byte[42577920];
-	private final byte R = 0;
+	/*private final byte R = 0;
 	private final byte G = 1;
 	private final byte Y = 2;
 	private final byte B = 3;
 	private final byte O = 4;
-	private final byte W = 5;
+	private final byte W = 5;*/
 	private String history = "Moves: ";
 	public PriorityQueue<RubixCube> frontier;
-	private byte[] faceArray = {R,G,Y,B,O,W};
+	//private byte[] faceArray = {R,G,Y,B,O,W};
 	final RubixCube goalCube;
 	final RubixCube inputCube;
 	private boolean success = false;
@@ -31,7 +31,7 @@ class Search {
 		
 		this.goalCube = new RubixCube("goal.txt");
 		this.inputCube = new RubixCube(inputCubeFile);
-		this.inputCube.rotateCube(Y).rotateCube(Y).rotateCube(Y).rotateCube(B).rotateCube(B).rotateCube(B);
+		//this.inputCube.rotateCube(Y).rotateCube(Y).rotateCube(Y).rotateCube(B).rotateCube(B).rotateCube(B);
 		this.frontier = new PriorityQueue<RubixCube>(11,new RubixCubeComparator());
 		
 		FileInputStream fis1 = new FileInputStream("heuristic-tables/cornercubie-table.txt");
@@ -140,7 +140,7 @@ class Search {
 			
 			//byte[] history = hist;
 			//byte fn = costSoFar + heuristic(cube);
-			RubixCube node1 = RubixCube.newInstance(cube.getCube());
+			/*RubixCube node1 = RubixCube.newInstance(cube.getCube());
 			RubixCube node2 = RubixCube.newInstance(cube.getCube());
 			RubixCube node3 = RubixCube.newInstance(cube.getCube());
 			RubixCube node4 = RubixCube.newInstance(cube.getCube());
@@ -148,27 +148,29 @@ class Search {
 			RubixCube node6 = RubixCube.newInstance(cube.getCube());
 			RubixCube[] cubeArray = {node1,node2,node3,node4,node5,node6};
 			
-			int[] fnArray = {-1,-1,-1,-1,-1,-1};
+			int[] fnArray = {-1,-1,-1,-1,-1,-1};*/
 			/*node1.rotateCube(R);
 			System.out.println(node1.toString());
 			node2.rotateCube(R);
 			System.out.println(node2.toString());*/
 			
-			for(int i=0; i<cubeArray.length; i++){
-				//cubeArray[i].rotateCube(faceArray[i]).rotateCube(faceArray[i]).rotateCube(faceArray[i]);
-				//System.out.println(i);
-				//System.out.println("ORIGINAL: \n"+cubeArray[i]);
-				cubeArray[i].rotateCube(this.faceArray[i]);
-				//System.out.println("ROTATED: \n"+cubeArray[i]);
-				//System.out.println(Arrays.toString(cubeArray));
-				//int heuristic = heuristic(cubeArray[i]);
-				fnArray[i] = costSoFar + heuristic(cubeArray[i]);
-				cubeArray[i].setfunctionVal(fnArray[i]);
+			for(byte i=0; i<6; i++){
+				RubixCube node = RubixCube.newInstance(cube.getCube());
+				node.rotateCube(i);
+				node.setfunctionVal(costSoFar + heuristic(node));
+				frontier.add(node);
 			}
-			
-			
-			for(int i=0; i<cubeArray.length; i++){
-				frontier.add(cubeArray[i]);
+			for(byte i=0; i<6; i++){
+				RubixCube node = RubixCube.newInstance(cube.getCube());
+				node.rotateCube(i).rotateCube(i);
+				node.setfunctionVal(costSoFar + heuristic(node));
+				frontier.add(node);
+			}
+			for(byte i=0; i<6; i++){
+				RubixCube node = RubixCube.newInstance(cube.getCube());
+				node.rotateCube(i).rotateCube(i).rotateCube(i);
+				node.setfunctionVal(costSoFar + heuristic(node));
+				frontier.add(node);
 			}
 			
 			//System.out.println(Arrays.toString(fnArray));
@@ -198,7 +200,8 @@ class Search {
 				}
 			}*/
 			//this.history += this.frontier.element().lastMove + ", ";
-			hist.add((int) this.frontier.element().lastMove);
+			//hist.add((int) this.frontier.element().lastMoveList);
+			hist.addAll(this.frontier.element().lastMoveList);
 			return aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, hist);
 		}
 		return hist;

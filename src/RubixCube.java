@@ -17,6 +17,7 @@ public class RubixCube implements Comparable<RubixCube> {
 	public int functionVal = 0;
 	public int cost = 0;
 	public byte lastMove = 0;
+	public ArrayList<Integer> lastMoveList = new ArrayList<Integer>();
 
 	//corner cubie locations
 	private final byte[][][] CCL = {
@@ -174,7 +175,7 @@ public class RubixCube implements Comparable<RubixCube> {
 	}
 
 	public RubixCube rotateCube(byte face) {
-		this.lastMove = face;
+		lastMoveList.add((int) face);
 		byte[][] start = new byte[6][8];
 		for (int i=0; i<6; i++) {
 			for (int j=0; j<8; j++) {
