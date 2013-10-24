@@ -16,7 +16,7 @@ public class TableGenerator {
 	private int fuck;
 	private int shit;
 
-	private int[] moveLimit = {33, 30, 30};
+	private int[] moveLimit = {11, 10, 10};
 
 	//Corner Cubie Locations
 	private final byte[][][] CCL = {
@@ -136,7 +136,9 @@ public class TableGenerator {
 			table[index] = count++;
 			for (byte i = R; i <= W; i++) {
 				//branch(state.rotateCube(i), count);
-				branch(state.rotateCube(i).rotateCube(i).rotateCube(i), count, type);
+				branch(RubixCube.newInstance(state.rotateCube(i).getCube()), count, type);
+				branch(RubixCube.newInstance(state.rotateCube(i).rotateCube(i).getCube()), count, type);
+				branch(RubixCube.newInstance(state.rotateCube(i).rotateCube(i).rotateCube(i).getCube()), count, type);
 			}
 		}
 		shit--;

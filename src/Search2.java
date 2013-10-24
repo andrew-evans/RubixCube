@@ -92,12 +92,24 @@ class Search2 {
 			return hist;
 		}
 		
-		byte i;
-		for (i=0; i<6; i++) {
+
+		for (byte i=0; i<6; i++) {
 			RubixCube current = RubixCube.newInstance(state.rotateCube(i).getCube(), state.functionVal, state.cost + 1, i);
 			current.functionVal = current.cost + heuristic(current);
 			frontier.add(current);
-			//System.out.println("Rotate " + i + ":  " + current.cost + " + " + heuristic(current));
+
+		}
+		for (byte i=0; i<6; i++) {
+			RubixCube current = RubixCube.newInstance(state.rotateCube(i).rotateCube(i).getCube(), state.functionVal, state.cost + 1, i);
+			current.functionVal = current.cost + heuristic(current);
+			frontier.add(current);
+
+		}
+		for (byte i=0; i<6; i++) {
+			RubixCube current = RubixCube.newInstance(state.rotateCube(i).rotateCube(i).rotateCube(i).getCube(), state.functionVal, state.cost + 1, i);
+			current.functionVal = current.cost + heuristic(current);
+			frontier.add(current);
+
 		}
 		
 		RubixCube nextState = frontier.remove();
