@@ -114,6 +114,8 @@ class Search {
 			costSoFar += 1;
 
 			hist.addAll(this.frontier.element().lastMoveList);
+			System.out.println(this.frontier.element());
+			System.out.println(this.frontier.element().lastMoveList);
 			return aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, hist);
 		}
 		return hist;

@@ -70,7 +70,7 @@ class Search2 {
 		fis3.close();
 	}
 	
-	public ArrayList<Integer> ASearch() throws FileNotFoundException{
+	public String ASearch() throws FileNotFoundException{
 		int bound = 0;
 		while (!success) {
 			System.out.println("Searching with bound " + bound);
@@ -79,7 +79,7 @@ class Search2 {
 			bound += 1;
 		}
 		
-		return this.history;
+		return convertPath(this.history);
 	}
 	
 	public ArrayList<Integer> aStar(RubixCube state, ArrayList<Integer> hist, int bound) {
@@ -123,6 +123,29 @@ class Search2 {
 	public int heuristic(RubixCube cube){
 		//return (int)this.table2[cube.getIndexEdge1()];
 		return Math.max(Math.max((int)this.table1[cube.getIndexCorner()],(int)this.table2[cube.getIndexEdge1()]),(int)this.table3[cube.getIndexEdge2()]);
+	}
+	
+	public String convertPath(ArrayList<Integer> oldPath){
+		int previous = -1;
+		int[] faceCounter = {0,0,0,0,0,0};
+		String[] faces = {"R","G","Y","B","O","W"};
+		String newPath = "";
+		for (int face : oldPath){
+			if(previous==face){
+				faceCounter[face] += 1; 
+			}else{
+				faceCounter[face] = 1;
+			}
+			previous = face;
+		}
+		previous = -1;
+		for (int face : oldPath){
+			if(previous != face){
+				newPath = newPath + faces[face] + faceCounter[face] + " ";
+				previous = face;
+			}
+		}
+		return newPath;
 	}
 }
 
