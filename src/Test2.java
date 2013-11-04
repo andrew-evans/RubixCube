@@ -6,7 +6,7 @@ public class Test2 {
 
 	public static void main(String[] args) throws IOException {
 
-		Search s = new Search("samplestates/cube03");
+		Search s = new Search("samplestates/cube04");
 		//Search2 s = new Search2("samplestates/cube03");
 		
 		long start = new Date().getTime();
@@ -16,7 +16,7 @@ public class Test2 {
 		//System.out.println(s.ASearch());
 		
 		long end = new Date().getTime() - start;
-		System.out.println("----------Finish!-------------   "+ end/1000 + " sec to complete.");
+		System.out.println("----------Finish!-------------   "+ end + " msec to complete.");
 
 	}
 

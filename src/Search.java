@@ -115,7 +115,7 @@ class Search {
 
 			hist.addAll(this.frontier.element().lastMoveList);
 			System.out.println(this.frontier.element());
-			System.out.println(this.frontier.element().lastMoveList);
+			System.out.println(this.frontier.element().lastMoveList + " fn val of: "+this.frontier.element().getfunctionVal());
 			return aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, hist);
 		}
 		return hist;
@@ -134,16 +134,13 @@ class Search {
 			if(previous==face){
 				faceCounter[face] += 1; 
 			}else{
+				if(previous != -1){
+					newPath = newPath + faces[previous] + faceCounter[previous] + " ";
+					faceCounter[previous] = 0;
+				}
 				faceCounter[face] = 1;
 			}
 			previous = face;
-		}
-		previous = -1;
-		for (int face : oldPath){
-			if(previous != face){
-				newPath = newPath + faces[face] + faceCounter[face] + " ";
-				previous = face;
-			}
 		}
 		return newPath;
 	}
