@@ -114,7 +114,8 @@ class Search {
 			rotationsSoFar += 1;
 			costSoFar += 1;
 
-			hist += "" + byteToFace(this.frontier.element().lastMove) + this.frontier.element().lastTurns;
+			hist += "" + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns;
+			System.out.println(hist + "                 " + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns);
 			//hist.addAll(this.frontier.element().lastMoveList);
 			System.out.println(this.frontier.element());
 			System.out.println(this.frontier.element().lastMoveList + " fn val of: "+this.frontier.element().getfunctionVal());
