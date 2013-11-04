@@ -5,19 +5,27 @@ import java.util.Date;
 public class Test2 {
 
 	public static void main(String[] args) throws IOException {
-
-		Search s = new Search("samplestates/cube03");
+		String fileString = "samplestates/cube";
+		
+		Search s = new Search("samplestates/cube00");
 		//Search2 s = new Search2("samplestates/cube03");
 		
-		long start = new Date().getTime();
-		System.out.println("Started Search");
+		for (int i=0; i<=20; i+=1) {
+			long start = new Date().getTime();
+			System.out.println("Started Search " + i);
+			if (i < 10)
+				String file = fileString + "0" + i;
+			else
+				String file = fileString + i;
+			
+			s.setCube(file);
 		
-		System.out.println(s.IDA());
-		//System.out.println(s.ASearch());
+			System.out.println(s.IDA());
+			//System.out.println(s.ASearch());
 		
-		long end = new Date().getTime() - start;
-		System.out.println("----------Finish!-------------   "+ end + " msec to complete.");
-
+			long end = new Date().getTime() - start;
+			System.out.println("----------Finish!-------------   "+ end + " msec to complete.");
+		}
 	}
 
 }

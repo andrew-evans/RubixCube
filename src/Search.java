@@ -163,5 +163,9 @@ class Search {
 		String[] faces = {"R","G","Y","B","O","W"};
 		return faces[face];
 	}
+	
+	public void setCube(String inputCubeFile) {
+		this.inputCube = new RubixCube(inputCubeFile);
+	}
 }
 
