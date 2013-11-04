@@ -93,7 +93,7 @@ public class TableGenerator {
 		goal = new RubixCube("goal-cubies.txt");
 		table = new byte[88179840]; //280805332   561610664
 		for (int i=0; i<table.length; i++) {
-			table[i] = (byte) 127;
+			table[i] = (byte) 11;
 		}
 
 		branch(goal, (byte) 0, 0);
@@ -103,7 +103,7 @@ public class TableGenerator {
 		goal = new RubixCube("goal-edges1.txt");
 		table = new byte[42577920];
 		for (int i=0; i<table.length; i++) {
-			table[i] = (byte) 127;
+			table[i] = (byte) 10;
 		}
 
 		branch(goal, (byte) 0, 1);
@@ -113,7 +113,7 @@ public class TableGenerator {
 		goal = new RubixCube("goal-edges2.txt");
 		table = new byte[42577920];
 		for (int i=0; i<table.length; i++) {
-			table[i] = (byte) 127;
+			table[i] = (byte) 10;
 		}
 
 		branch(goal, (byte) 0, 2);
@@ -132,7 +132,7 @@ public class TableGenerator {
 			case (2): index = state.getIndexEdge2(); break;
 		}
 		//System.out.println(table[index]);
-		if (table[index] > count && count<= moveLimit[type]) {
+		if (table[index] > count && count <= moveLimit[type] - 1) {
 			table[index] = count++;
 			for (byte i = R; i <= W; i++) {
 				//branch(state.rotateCube(i), count);
