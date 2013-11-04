@@ -110,13 +110,13 @@ class Search {
 				frontier.add(node);
 			}
 			
-			rotationsSoFar += 1;
-			costSoFar += 1;
+			//rotationsSoFar += 1;
+			//costSoFar += 1;
 
-			hist.addAll(this.frontier.element().lastMoveList);
+			//hist.addAll(this.frontier.element().lastMoveList);
 			System.out.println(this.frontier.element());
 			System.out.println(this.frontier.element().lastMoveList + " fn val of: "+this.frontier.element().getfunctionVal());
-			return aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, hist);
+			return aStar(this.frontier.remove(), costSoFar + 1, rotationsSoFar + 1, bound, hist.addAll(this.frontier.element().lastMoveList));
 		}
 		return hist;
 
