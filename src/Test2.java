@@ -6,7 +6,7 @@ public class Test2 {
 
 	public static void main(String[] args) throws IOException {
 
-		Search s = new Search("samplestates/cube04");
+		Search s = new Search("rubbix.txt");
 		//Search2 s = new Search2("samplestates/cube03");
 		
 		long start = new Date().getTime();

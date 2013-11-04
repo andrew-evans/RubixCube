@@ -62,22 +62,22 @@ class Search {
 	
 	public String IDA() throws FileNotFoundException{
 
-		int bound = 20;
+		int bound = 1;
 		String poop = "";
-		ArrayList<Integer> path = new ArrayList<Integer>();
+		//ArrayList<Integer> path = new ArrayList<Integer>();
 
-		//while (!success){
+		while (!success){
 			this.frontier.clear();
 
-			int rotationsSoFar = 0;
+			//int rotationsSoFar = 0;
 			int costSoFar = 0;
 			poop = "";
-			path = new ArrayList<Integer>(); 
+			//path = new ArrayList<Integer>(); 
 			this.frontier.add(this.inputCube);
 			poop = aStar(this.frontier.remove(), costSoFar, bound, poop);
 
-			//bound += 1;
-		//}
+			bound += 1;
+		}
 		
 		return poop;
 	}
@@ -121,9 +121,9 @@ class Search {
 			System.out.println(hist + "                 " + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns + "\n");
 			//hist.addAll(this.frontier.element().lastMoveList);
 			
-			this.fArray = this.frontier.toArray();
-			for (RubixCube cube : fArray) {
-				System.out.print("  " + cube.functionVal);
+			this.fArray = this.frontier.toArray(new RubixCube[0]);
+			for (RubixCube cubez : fArray) {
+				System.out.print("  " + cubez.functionVal);
 			}
 			
 			System.out.println(this.frontier.element());
