@@ -62,6 +62,7 @@ class Search {
 	public String IDA() throws FileNotFoundException{
 
 		int bound = 1;
+		String poop = "";
 		ArrayList<Integer> path = new ArrayList<Integer>();
 
 		while (!success){
@@ -72,19 +73,19 @@ class Search {
 
 			path = new ArrayList<Integer>(); 
 			this.frontier.add(this.inputCube);
-			path = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, new ArrayList<Integer>());
+			poop = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, new ArrayList<Integer>());
 
 			bound += 1;
 		}
 		
-		return convertPath(path);
+		return poop;
 	}
 	
-	public ArrayList<Integer> aStar(RubixCube cube, int costSoFar, int rotationsSoFar, int bound, ArrayList<Integer> hist){
+	public String aStar(RubixCube cube, int costSoFar, int rotationsSoFar, int bound, String hist){
 	
 		if (heuristic(cube) == 0) {
 			this.success = true;
-			return hist;
+			return "";
 		}
 		
 		if(rotationsSoFar < bound){
@@ -113,7 +114,8 @@ class Search {
 			rotationsSoFar += 1;
 			costSoFar += 1;
 
-			hist.addAll(this.frontier.element().lastMoveList);
+			hist += byteToFace(this.frontier.element().lastMove) + this.frontier.element().lastTurns;
+			//hist.addAll(this.frontier.element().lastMoveList);
 			System.out.println(this.frontier.element());
 			System.out.println(this.frontier.element().lastMoveList + " fn val of: "+this.frontier.element().getfunctionVal());
 			return aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, hist);
@@ -143,6 +145,11 @@ class Search {
 			previous = face;
 		}
 		return newPath;
+	}
+	
+	public String byteToFace(byte face) {
+		String[] faces = {"R","G","Y","B","O","W"};
+		return faces[face];
 	}
 }
 
