@@ -61,22 +61,22 @@ class Search {
 	
 	public String IDA() throws FileNotFoundException{
 
-		int bound = 1;
+		int bound = 20;
 		String poop = "";
 		ArrayList<Integer> path = new ArrayList<Integer>();
 
-		while (!success){
+		//while (!success){
 			this.frontier.clear();
 
 			int rotationsSoFar = 0;
 			int costSoFar = 0;
-
+			poop = "";
 			path = new ArrayList<Integer>(); 
 			this.frontier.add(this.inputCube);
 			poop = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, poop);
 
-			bound += 1;
-		}
+			//bound += 1;
+		//}
 		
 		return poop;
 	}
@@ -85,7 +85,7 @@ class Search {
 	
 		if (heuristic(cube) == 0) {
 			this.success = true;
-			return "";
+			return hist;
 		}
 		
 		if(rotationsSoFar < bound){
@@ -98,17 +98,20 @@ class Search {
 			}
 			
 			for(byte i=0; i<6; i++){
-				RubixCube node = RubixCube.newInstance(cube.getCube());
-				node.rotateCube(i).rotateCube(i);
-				node.setfunctionVal(costSoFar + heuristic(node));
-				frontier.add(node);
+				RubixCube node2 = RubixCube.newInstance(cube.getCube());
+				node2.rotateCube(i);
+				node2.rotateCube(i);
+				node2.setfunctionVal(costSoFar + heuristic(node2));
+				frontier.add(node2);
 			}
 			
 			for(byte i=0; i<6; i++){
-				RubixCube node = RubixCube.newInstance(cube.getCube());
-				node.rotateCube(i).rotateCube(i).rotateCube(i);
-				node.setfunctionVal(costSoFar + heuristic(node));
-				frontier.add(node);
+				RubixCube node3 = RubixCube.newInstance(cube.getCube());
+				node3.rotateCube(i);
+				node3.rotateCube(i);
+				node3.rotateCube(i);
+				node3.setfunctionVal(costSoFar + heuristic(node3));
+				frontier.add(node3);
 			}
 			
 			rotationsSoFar += 1;
@@ -117,6 +120,7 @@ class Search {
 			hist += "" + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns;
 			System.out.println(hist + "                 " + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns);
 			//hist.addAll(this.frontier.element().lastMoveList);
+			System.out.println("lololol: " +"cost so far: "+costSoFar+" rotation: "+rotationsSoFar);
 			System.out.println(this.frontier.element());
 			System.out.println(this.frontier.element().lastMoveList + " fn val of: "+this.frontier.element().getfunctionVal());
 			return aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, hist);
