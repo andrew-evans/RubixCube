@@ -73,7 +73,7 @@ class Search {
 			poop = "";
 			path = new ArrayList<Integer>(); 
 			this.frontier.add(this.inputCube);
-			poop = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, poop);
+			poop = aStar(this.frontier.remove(), costSoFar, bound, poop);
 
 			//bound += 1;
 		//}
@@ -81,14 +81,14 @@ class Search {
 		return poop;
 	}
 	
-	public String aStar(RubixCube cube, int costSoFar, int rotationsSoFar, int bound, String hist){
+	public String aStar(RubixCube cube, int costSoFar, int bound, String hist){
 	
 		if (heuristic(cube) == 0) {
 			this.success = true;
 			return hist;
 		}
 		
-		if(rotationsSoFar < bound){
+		if(costSoFar < bound){
 			
 			for(byte i=0; i<6; i++){
 				RubixCube node = RubixCube.newInstance(cube.getCube());
@@ -114,16 +114,14 @@ class Search {
 				frontier.add(node3);
 			}
 			
-			rotationsSoFar += 1;
 			costSoFar += 1;
 
 			hist += "" + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns;
 			System.out.println(hist + "                 " + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns);
 			//hist.addAll(this.frontier.element().lastMoveList);
-			System.out.println("lololol: " +"cost so far: "+costSoFar+" rotation: "+rotationsSoFar);
 			System.out.println(this.frontier.element());
 			System.out.println(this.frontier.element().lastMoveList + " fn val of: "+this.frontier.element().getfunctionVal());
-			return aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, hist);
+			return aStar(this.frontier.remove(), costSoFar, bound, hist);
 		}
 		return hist;
 
