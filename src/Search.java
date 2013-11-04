@@ -91,6 +91,8 @@ class Search {
 		
 		if(costSoFar < bound){
 			
+			costSoFar += 1;
+			
 			for(byte i=0; i<6; i++){
 				RubixCube node = RubixCube.newInstance(cube.getCube());
 				node.rotateCube(i);
@@ -115,7 +117,7 @@ class Search {
 				frontier.add(node3);
 			}
 			
-			costSoFar += 1;
+			
 
 			hist += "" + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns;
 			System.out.println(hist + "                 " + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns + "\n");
