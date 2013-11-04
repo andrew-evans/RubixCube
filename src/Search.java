@@ -85,6 +85,7 @@ class Search {
 	public String aStar(RubixCube cube, int costSoFar, int bound, String hist){
 	
 		if (heuristic(cube) == 0) {
+			System.out.println(costSoFar);
 			this.success = true;
 			return hist;
 		}
@@ -122,7 +123,7 @@ class Search {
 			hist += "" + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns;
 			//System.out.println(hist + "                 " + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns + "\n");
 			//hist.addAll(this.frontier.element().lastMoveList);
-			
+			/*System.out.println("Cost so far: " + costSoFar);*/
 			/*this.fArray = this.frontier.toArray(new RubixCube[0]);
 			for (RubixCube cubez : fArray) {
 				System.out.print("  " + cubez.functionVal);
@@ -137,7 +138,8 @@ class Search {
 	}
 	
 	public int heuristic(RubixCube cube){
-		return Math.max(Math.max((int)this.table1[cube.getIndexCorner()],(int)this.table2[cube.getIndexEdge1()]),(int)this.table3[cube.getIndexEdge2()]);
+		return 0;
+		//return Math.max(Math.max((int)this.table1[cube.getIndexCorner()],(int)this.table2[cube.getIndexEdge1()]),(int)this.table3[cube.getIndexEdge2()]);
 	}
 	public String convertPath(ArrayList<Integer> oldPath){
 		int previous = -1;

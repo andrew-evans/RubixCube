@@ -10,7 +10,7 @@ public class Test2 {
 		Search s = new Search("samplestates/cube00");
 		//Search2 s = new Search2("samplestates/cube03");
 		
-		for (int i=7; i<=20; i+=1) {
+		for (int i=0; i<=20; i+=1) {
 			long start = new Date().getTime();
 			System.out.println("Started Search " + i);
 			String file="";
