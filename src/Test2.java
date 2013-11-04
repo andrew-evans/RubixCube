@@ -10,14 +10,17 @@ public class Test2 {
 		Search s = new Search("samplestates/cube00");
 		//Search2 s = new Search2("samplestates/cube03");
 		
-		for (int i=0; i<=20; i+=1) {
+		for (int i=7; i<=20; i+=1) {
 			long start = new Date().getTime();
 			System.out.println("Started Search " + i);
-			if (i < 10)
-				String file = fileString + "0" + i;
-			else
-				String file = fileString + i;
-			
+			String file="";
+			if (i < 10){
+				file = fileString + "0" + i;
+			}
+			else{
+				file = fileString + i;
+			}
+			s.success = false;
 			s.setCube(file);
 		
 			System.out.println(s.IDA());

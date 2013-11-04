@@ -314,8 +314,8 @@ public class RubixCube implements Comparable<RubixCube> {
 		int[] indexA = new int[7];
 		int counter = 0;
 		ArrayList<Integer> remaining = new ArrayList<Integer>(8);
-		for (int cocksandwich=0; cocksandwich<8; cocksandwich++) {
-			remaining.add(cocksandwich);
+		for (int fcounter=0; fcounter<8; fcounter++) {
+			remaining.add(fcounter);
 		}
 		String indexB = "0";
 		int currentCubie, otherCubie, currentOrientation;
@@ -375,8 +375,8 @@ public class RubixCube implements Comparable<RubixCube> {
 		int[] indexA = new int[6];
 		int counter = 0;
 		ArrayList<Integer> remaining = new ArrayList<Integer>(12);
-		for (int cocksandwich=0; cocksandwich<12; cocksandwich++) {
-			remaining.add(cocksandwich);
+		for (int fcounter=0; fcounter<12; fcounter++) {
+			remaining.add(fcounter);
 		}
 		String indexB = "0";
 		int currentCubieLocation, otherCubieLocation, currentOrientation;
@@ -432,8 +432,8 @@ public class RubixCube implements Comparable<RubixCube> {
 		int[] indexA = new int[6];
 		int counter = 0;
 		ArrayList<Integer> remaining = new ArrayList<Integer>(12);
-		for (int cocksandwich=0; cocksandwich<12; cocksandwich++) {
-			remaining.add(cocksandwich);
+		for (int fcounter=0; fcounter<12; fcounter++) {
+			remaining.add(fcounter);
 		}
 		String indexB = "0";
 		int currentCubieLocation, otherCubieLocation, currentOrientation;

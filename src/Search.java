@@ -14,8 +14,8 @@ class Search {
 	public PriorityQueue<RubixCube> frontier;
 	public RubixCube[] fArray;
 	final RubixCube goalCube;
-	final RubixCube inputCube;
-	private boolean success = false;
+	RubixCube inputCube;
+	public boolean success = false;
 	public Search(String inputCubeFile) throws IOException {
 		
 		this.goalCube = new RubixCube("goal.txt");
@@ -120,16 +120,16 @@ class Search {
 			
 
 			hist += "" + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns;
-			System.out.println(hist + "                 " + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns + "\n");
+			//System.out.println(hist + "                 " + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns + "\n");
 			//hist.addAll(this.frontier.element().lastMoveList);
 			
-			this.fArray = this.frontier.toArray(new RubixCube[0]);
+			/*this.fArray = this.frontier.toArray(new RubixCube[0]);
 			for (RubixCube cubez : fArray) {
 				System.out.print("  " + cubez.functionVal);
-			}
+			}*/
 			
-			System.out.println(this.frontier.element());
-			System.out.println(this.frontier.element().lastMoveList + " fn val of: "+this.frontier.element().getfunctionVal());
+			//System.out.println(this.frontier.element());
+			//System.out.println(this.frontier.element().lastMoveList + " fn val of: "+this.frontier.element().getfunctionVal());
 			return aStar(this.frontier.remove(), costSoFar, bound, hist);
 		}
 		return hist;
@@ -164,7 +164,7 @@ class Search {
 		return faces[face];
 	}
 	
-	public void setCube(String inputCubeFile) {
+	public void setCube(String inputCubeFile) throws FileNotFoundException {
 		this.inputCube = new RubixCube(inputCubeFile);
 	}
 }
