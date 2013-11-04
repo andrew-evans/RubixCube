@@ -17,7 +17,7 @@ public class RubixCube implements Comparable<RubixCube> {
 	public int functionVal = 0;
 	public int cost = 0;
 	public byte lastMove = 0;
-	public byte lastTurns = 0;
+	public int lastTurns = 0;
 	public ArrayList<Integer> lastMoveList = new ArrayList<Integer>();
 
 	//corner cubie locations

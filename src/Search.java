@@ -73,7 +73,7 @@ class Search {
 
 			path = new ArrayList<Integer>(); 
 			this.frontier.add(this.inputCube);
-			poop = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, new ArrayList<Integer>());
+			poop = aStar(this.frontier.remove(), costSoFar, rotationsSoFar, bound, poop);
 
 			bound += 1;
 		}
