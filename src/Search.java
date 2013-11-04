@@ -12,6 +12,7 @@ class Search {
 	protected byte[] table3 = new byte[42577920];
 
 	public PriorityQueue<RubixCube> frontier;
+	public RubixCube[] fArray;
 	final RubixCube goalCube;
 	final RubixCube inputCube;
 	private boolean success = false;
@@ -117,8 +118,14 @@ class Search {
 			costSoFar += 1;
 
 			hist += "" + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns;
-			System.out.println(hist + "                 " + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns);
+			System.out.println(hist + "                 " + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns + "\n");
 			//hist.addAll(this.frontier.element().lastMoveList);
+			
+			this.fArray = this.frontier.toArray();
+			for (RubixCube cube : fArray) {
+				System.out.print("  " + cube.functionVal);
+			}
+			
 			System.out.println(this.frontier.element());
 			System.out.println(this.frontier.element().lastMoveList + " fn val of: "+this.frontier.element().getfunctionVal());
 			return aStar(this.frontier.remove(), costSoFar, bound, hist);
