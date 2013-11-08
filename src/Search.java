@@ -2,6 +2,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 
@@ -70,11 +71,11 @@ class Search {
 			this.frontier.clear();
 
 			//int rotationsSoFar = 0;
-			int costSoFar = 0;
+			//int costSoFar = 0;
 			poop = "";
 			//path = new ArrayList<Integer>(); 
 			this.frontier.add(this.inputCube);
-			poop = aStar(this.frontier.remove(), costSoFar, bound, poop);
+			poop = aStar(this.frontier.remove(), bound);
 
 			bound += 1;
 		}
@@ -82,45 +83,45 @@ class Search {
 		return poop;
 	}
 	
-	public String aStar(RubixCube cube, int costSoFar, int bound, String hist){
+	public String aStar(RubixCube cube, int bound){
 	
-		if (heuristic(cube) == 0) {
-			System.out.println(costSoFar);
+		if (Arrays.deepEquals(cube.getCube(), this.goalCube.getCube())){//heuristic(cube) == 0) {
+			System.out.println(cube.cost);
 			this.success = true;
-			return hist;
+			return cube.history;
 		}
 		
-		if(costSoFar < bound){
+		if(cube.cost < bound){
 			
-			costSoFar += 1;
-			
-			for(byte i=0; i<6; i++){
-				RubixCube node = RubixCube.newInstance(cube.getCube());
-				node.rotateCube(i);
-				node.setfunctionVal(costSoFar + heuristic(node));
-				frontier.add(node);
+			for (byte j=1; j<4; j++) {
+				for(byte i=0; i<6; i++){
+					RubixCube node = RubixCube.newInstance(cube);
+					node.rotateCube(i,j);
+					node.functionVal = node.cost + heuristic(node);
+					frontier.add(node);
+				}
 			}
 			
-			for(byte i=0; i<6; i++){
+			/*for(byte i=0; i<6; i++){
 				RubixCube node2 = RubixCube.newInstance(cube.getCube());
 				node2.rotateCube(i);
 				node2.rotateCube(i);
 				node2.setfunctionVal(costSoFar + heuristic(node2));
 				frontier.add(node2);
-			}
+			}*/
 			
-			for(byte i=0; i<6; i++){
+			/*for(byte i=0; i<6; i++){
 				RubixCube node3 = RubixCube.newInstance(cube.getCube());
 				node3.rotateCube(i);
 				node3.rotateCube(i);
 				node3.rotateCube(i);
 				node3.setfunctionVal(costSoFar + heuristic(node3));
 				frontier.add(node3);
-			}
+			}*/
 			
 			
 
-			hist += "" + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns;
+			//hist += "" + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns;
 			//System.out.println(hist + "                 " + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns + "\n");
 			//hist.addAll(this.frontier.element().lastMoveList);
 			/*System.out.println("Cost so far: " + costSoFar);*/
@@ -131,15 +132,15 @@ class Search {
 			
 			//System.out.println(this.frontier.element());
 			//System.out.println(this.frontier.element().lastMoveList + " fn val of: "+this.frontier.element().getfunctionVal());
-			return aStar(this.frontier.remove(), costSoFar, bound, hist);
+			return aStar(this.frontier.remove(), bound);
 		}
-		return hist;
+		return cube.history;
 
 	}
 	
 	public int heuristic(RubixCube cube){
-		return 0;
-		//return Math.max(Math.max((int)this.table1[cube.getIndexCorner()],(int)this.table2[cube.getIndexEdge1()]),(int)this.table3[cube.getIndexEdge2()]);
+		//return 0;
+		return Math.max(Math.max((int)this.table1[cube.getIndexCorner()],(int)this.table2[cube.getIndexEdge1()]),(int)this.table3[cube.getIndexEdge2()]);
 	}
 	public String convertPath(ArrayList<Integer> oldPath){
 		int previous = -1;
