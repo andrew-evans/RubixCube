@@ -65,15 +65,12 @@ class Search {
 
 		int bound = 1;
 		String poop = "";
-		//ArrayList<Integer> path = new ArrayList<Integer>();
+
 
 		while (!success){
 			this.frontier.clear();
-
-			//int rotationsSoFar = 0;
-			//int costSoFar = 0;
 			poop = "";
-			//path = new ArrayList<Integer>(); 
+
 			this.frontier.add(this.inputCube);
 			poop = aStar(this.frontier.remove(), bound);
 
@@ -91,8 +88,7 @@ class Search {
 			return cube.history;
 		}
 		
-		if(cube.cost < bound){
-			
+		if(cube.cost < bound){		
 			for (byte j=1; j<4; j++) {
 				for(byte i=0; i<6; i++){
 					RubixCube node = RubixCube.newInstance(cube);
@@ -102,36 +98,6 @@ class Search {
 				}
 			}
 			
-			/*for(byte i=0; i<6; i++){
-				RubixCube node2 = RubixCube.newInstance(cube.getCube());
-				node2.rotateCube(i);
-				node2.rotateCube(i);
-				node2.setfunctionVal(costSoFar + heuristic(node2));
-				frontier.add(node2);
-			}*/
-			
-			/*for(byte i=0; i<6; i++){
-				RubixCube node3 = RubixCube.newInstance(cube.getCube());
-				node3.rotateCube(i);
-				node3.rotateCube(i);
-				node3.rotateCube(i);
-				node3.setfunctionVal(costSoFar + heuristic(node3));
-				frontier.add(node3);
-			}*/
-			
-			
-
-			//hist += "" + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns;
-			//System.out.println(hist + "                 " + byteToFace(this.frontier.element().lastMove) + "" + this.frontier.element().lastTurns + "\n");
-			//hist.addAll(this.frontier.element().lastMoveList);
-			/*System.out.println("Cost so far: " + costSoFar);*/
-			/*this.fArray = this.frontier.toArray(new RubixCube[0]);
-			for (RubixCube cubez : fArray) {
-				System.out.print("  " + cubez.functionVal);
-			}*/
-			
-			//System.out.println(this.frontier.element());
-			//System.out.println(this.frontier.element().lastMoveList + " fn val of: "+this.frontier.element().getfunctionVal());
 			return aStar(this.frontier.remove(), bound);
 		}
 		return cube.history;
