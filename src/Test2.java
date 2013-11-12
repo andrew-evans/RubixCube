@@ -5,12 +5,12 @@ import java.util.Date;
 public class Test2 {
 
 	public static void main(String[] args) throws IOException {
-		String fileString = "samplestates/cube";
+		String fileString = "countstates/cube";
 		
-		Search s = new Search("samplestates/cube01");
+		Search s = new Search("countstates/cube00");
 		//Search2 s = new Search2("samplestates/cube03");
 		
-		for (int i=0; i<=20; i+=1) {
+		for (int i=0; i<=15; i+=1) {
 			long start = new Date().getTime();
 			System.out.println("Started Search " + i);
 			String file="";

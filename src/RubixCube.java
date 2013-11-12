@@ -142,14 +142,10 @@ public class RubixCube implements Comparable<RubixCube> {
 						bounds += 1;
 					}
 				}
-				/*System.out.println(row1);
-				System.out.println(row2);
-				System.out.println(row3);*/
-				//System.out.println(Arrays.toString(face));
+
 			}
 		}
-		//System.out.println(Arrays.deepToString(cube));
-		//System.out.println(System.getProperty("user.dir"));
+;
 		s.close();
 		
 		for (byte i=0; i<6; i++){
